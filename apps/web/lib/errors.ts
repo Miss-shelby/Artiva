@@ -14,7 +14,3 @@ export class ArtivaError extends Error {
 export function isArtivaError(err: unknown): err is ArtivaError {
   return err instanceof ArtivaError;
 }
-
-export const ArtivaError = ArtivaError;
-export type ArtivaError = ArtivaError;
-export const isArtivaError = isArtivaError;
