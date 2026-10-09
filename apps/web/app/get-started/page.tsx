@@ -4,7 +4,7 @@ import { Footer } from "@/components/footer";
 import { GetStartedContent } from "@/components/get-started-content";
 
 export const metadata: Metadata = {
-  title: "Empezá con Molotov",
+  title: "Empezá con Artiva",
   description:
     "Entrá con email o conectá la wallet que ya usás, y mirá el arte digital donde la regalía la garantiza el contrato.",
 };

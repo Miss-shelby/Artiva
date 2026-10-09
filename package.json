@@ -1,8 +1,8 @@
 {
-  "name": "molotov",
+  "name": "artiva",
   "version": "0.0.0",
   "private": true,
-  "description": "Molotov — marketplace Web3 de arte digital con regalias on-chain (Stellar/Soroban)",
+  "description": "Artiva — marketplace Web3 de arte digital con regalías on-chain (Stellar/Soroban)",
   "packageManager": "pnpm@10.29.3",
   "engines": {
     "node": ">=20"

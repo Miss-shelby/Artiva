@@ -6,8 +6,8 @@ members = ["nft", "artist-registry", "marketplace"]
 edition = "2021"
 license = "MIT"
 version = "0.1.0"
-authors = ["Molotov"]
-repository = "https://github.com/BuenDia-Builders/molotov"
+authors = ["Artiva"]
+repository = "https://github.com/artiva-protocol/artiva"
 
 [workspace.dependencies]
 soroban-sdk = "=25.3.0"

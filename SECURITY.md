@@ -2,7 +2,7 @@
 
 ## Scope
 
-Molotov's critical guarantees — ownership, listings, settlement, fees, and royalty
+Artiva's critical guarantees — ownership, listings, settlement, fees, and royalty
 distribution — are enforced by the Soroban smart contracts in [`contracts/`](contracts/),
 currently deployed on **Stellar testnet**. The web app and the indexer are clients of
 that on-chain state: they read and display it, but do not decide it.

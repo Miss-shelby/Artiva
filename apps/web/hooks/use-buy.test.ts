@@ -18,7 +18,7 @@ vi.mock("@/hooks/use-wallet", () => ({
   useWallet: () => useWalletMock(),
 }));
 
-vi.mock("@molotov/stellar-client/molotov-marketplace", () => ({
+vi.mock("@artiva/stellar-client/artiva-marketplace", () => ({
   Client: vi.fn().mockImplementation(() => ({ buy: buyFnMock })),
   networks: {
     testnet: {

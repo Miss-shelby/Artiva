@@ -38,16 +38,16 @@ export async function generateMetadata({
   try {
     const { slug } = await params;
     const artist = await resolveProfile(decodeURIComponent(slug));
-    if (!artist || artist.revoked) return { title: "Artista — Molotov" };
+    if (!artist || artist.revoked) return { title: "Artista — Artiva" };
     const name = artist.handle ?? truncateAddress(artist.address, 6, 6);
     return {
-      title: `${name} — Molotov`,
+      title: `${name} — Artiva`,
       description:
         artist.bio ??
-        `Obras de ${name} en Molotov, con regalía garantizada por contrato en cada venta.`,
+        `Obras de ${name} en Artiva, con regalía garantizada por contrato en cada venta.`,
     };
   } catch {
-    return { title: "Artista — Molotov" };
+    return { title: "Artista — Artiva" };
   }
 }
 

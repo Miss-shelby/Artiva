@@ -1,4 +1,4 @@
-# Product Flows — Molotov
+# Product Flows — Artiva
 
 Flujos actuales (live en testnet) y flujos futuros con integraciones del roadmap.
 
@@ -57,7 +57,7 @@ Hace click en Mint
         ↓
 La app sube los metadatos a IPFS ─── JSON con título + imagen guardado en IPFS
         ↓
-La app construye la transacción → llama al contrato MolotovNFT.mint()
+La app construye la transacción → llama al contrato ArtivaNFT.mint()
         ↓
 Wallet firma la transacción (Privy en segundo plano, o Freighter con popup)
         ↓
@@ -216,10 +216,10 @@ Artista puede retirar en cualquier momento (más los intereses)
 
 ### F4. Comprador desde Ethereum/Base (CCTP / Allbridge)
 
-**El problema que resuelve**: un coleccionista tiene USDC en Ethereum y quiere comprar una obra en Molotov, pero no tiene wallet Stellar.
+**El problema que resuelve**: un coleccionista tiene USDC en Ethereum y quiere comprar una obra en Artiva, pero no tiene wallet Stellar.
 
 ```
-Comprador en Ethereum ve la obra en Molotov
+Comprador en Ethereum ve la obra en Artiva
         ↓
 Hace click en "Buy with ETH wallet"
         ↓

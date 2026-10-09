@@ -6,12 +6,6 @@ import { truncateAddress } from "@/lib/stellar";
 import { useI18n } from "@/lib/i18n";
 import { ArtworkPlaceholder } from "@/components/artwork-placeholder";
 
-/**
- * Shared with /works: the home page's "trending" grid and the discover grid
- * showed the same works in two different visual languages (a dense list vs.
- * a real card). One card, used by both, so home and discover read as the
- * same product.
- */
 export type ArtworkCardStatus = "for-sale" | "sold" | "not-listed";
 
 export type ArtworkCardProps = {
@@ -24,9 +18,6 @@ export type ArtworkCardProps = {
   priceXlm: string | null;
   priceUsd?: string | null;
   status: ArtworkCardStatus;
-  /** A grid can mark one card as the lead — wider image, bigger title — so a
-   * catalog reads as curated rather than N identical tiles. Purely visual:
-   * callers still control the grid span (e.g. `sm:col-span-2`) via className. */
   featured?: boolean;
   className?: string;
 };
@@ -50,11 +41,15 @@ export function ArtworkCard({
   return (
     <Link
       href={`/token/${tokenId}`}
-      className={`group flex flex-col bg-[var(--carbon)] overflow-hidden transition-transform duration-300 hover:-translate-y-0.5${className ? ` ${className}` : ""}`}
+      className={`glass-card group flex flex-col overflow-hidden rounded-2xl border border-white/10 transition-all duration-300 hover:border-violet-500/40 hover:shadow-xl hover:shadow-violet-500/10 ${
+        className ? ` ${className}` : ""
+      }`}
     >
-      {/* Image */}
+      {/* Image Container */}
       <div
-        className={`relative overflow-hidden bg-gradient-to-br from-[var(--blue-deep)] to-[var(--blue)] ${featured ? "aspect-[16/11]" : "aspect-[4/5]"}`}
+        className={`relative overflow-hidden bg-gradient-to-br from-violet-950/40 to-slate-900 ${
+          featured ? "aspect-[16/11]" : "aspect-[4/5]"
+        }`}
       >
         {imageUrl && (
           <Image
@@ -74,41 +69,52 @@ export function ArtworkCard({
             <ArtworkPlaceholder label={t("artwork.imageFallback")} />
           </div>
         )}
+
+        {/* Royalty Badge */}
+        {royaltyPct !== undefined && (
+          <div className="absolute top-3 left-3 rounded-full border border-white/15 bg-black/60 px-2.5 py-1 backdrop-blur-md">
+            <span className="font-mono text-[10px] font-semibold text-violet-300">
+              {royaltyPct}% Royalty
+            </span>
+          </div>
+        )}
       </div>
 
-      {/* Caption — a label under the work, not a spec sheet: one quiet metadata
-          line, gentler tracking, no ruled row separating title from price. */}
-      <div className="px-5 py-5 flex flex-col gap-1.5">
-        <p className="font-[family-name:var(--font-mono)] text-[9px] tracking-[0.14em] uppercase text-[var(--smoke)]/80 truncate">
+      {/* Caption */}
+      <div className="flex flex-col gap-1.5 px-5 py-4 bg-zinc-950/40">
+        <p className="font-mono text-[10px] tracking-wider uppercase text-zinc-400 truncate">
           {artistLabel}
         </p>
         <p
-          className={`font-[family-name:var(--font-display)] font-bold text-[var(--offwhite)] leading-snug truncate ${featured ? "text-2xl" : "text-[1.05rem]"}`}
+          className={`font-sans font-bold text-white leading-snug truncate group-hover:text-violet-300 transition-colors ${
+            featured ? "text-2xl" : "text-base"
+          }`}
         >
           {title}
         </p>
-        <div className="flex items-center justify-between mt-2.5">
-          {royaltyPct !== undefined ? (
-            <span className="font-[family-name:var(--font-mono)] text-[9px] tracking-[0.1em] uppercase text-[var(--smoke)]/50">
-              {royaltyPct}% royalty
-            </span>
-          ) : (
-            <span />
-          )}
+
+        <div className="flex items-center justify-between mt-2 pt-2 border-t border-white/5">
           {status === "for-sale" && priceXlm ? (
-            <span className="text-right font-[family-name:var(--font-mono)] text-[11px] text-[var(--offwhite)]">
-              {priceXlm} <span className="text-[var(--smoke)]">XLM</span>
-              {priceUsd && <span className="ml-1.5 text-[var(--smoke)]/60">~US$ {priceUsd}</span>}
-            </span>
+            <div className="flex items-baseline gap-1 font-mono">
+              <span className="text-sm font-bold text-cyan-400">{priceXlm}</span>
+              <span className="text-[10px] text-zinc-400">XLM</span>
+              {priceUsd && (
+                <span className="ml-1 text-[10px] text-zinc-500">~${priceUsd}</span>
+              )}
+            </div>
           ) : status === "sold" ? (
-            <span className="font-[family-name:var(--font-mono)] text-[9px] uppercase tracking-[0.1em] text-[var(--smoke)]/60">
+            <span className="font-mono text-[10px] uppercase tracking-wider text-rose-400 font-medium">
               {t("works.card.sold")}
             </span>
           ) : (
-            <span className="font-[family-name:var(--font-mono)] text-[9px] uppercase tracking-[0.1em] text-[var(--smoke)]/35">
+            <span className="font-mono text-[10px] uppercase tracking-wider text-zinc-500">
               {t("works.card.notListed")}
             </span>
           )}
+
+          <span className="font-mono text-[10px] uppercase text-zinc-400 group-hover:text-white transition-colors">
+            View →
+          </span>
         </div>
       </div>
     </Link>

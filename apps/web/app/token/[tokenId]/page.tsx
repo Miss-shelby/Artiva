@@ -22,7 +22,7 @@ export async function generateMetadata({
 }: {
   params: Promise<{ tokenId: string }>;
 }): Promise<Metadata> {
-  const fallback: Metadata = { title: "Obra — Molotov" };
+  const fallback: Metadata = { title: "Obra — Artiva" };
   try {
     const { tokenId } = await params;
     const id = Number(tokenId);
@@ -36,20 +36,20 @@ export async function generateMetadata({
     const artist = truncateAddress(token.artist);
     const royaltyPct = (token.royalty_bps / 100).toFixed(0);
     const description = listing
-      ? `${artist} · ${stroopsToXlm(listing.price)} XLM · ${royaltyPct}% de regalía para quien la creó, en cada venta en Molotov.`
-      : `${artist} · ${royaltyPct}% de regalía para quien la creó, en cada venta en Molotov.`;
+      ? `${artist} · ${stroopsToXlm(listing.price)} XLM · ${royaltyPct}% de regalía para quien la creó, en cada venta en Artiva.`
+      : `${artist} · ${royaltyPct}% de regalía para quien la creó, en cada venta en Artiva.`;
 
     return {
-      title: `${displayTitle} — Molotov`,
+      title: `${displayTitle} — Artiva`,
       description,
       openGraph: {
-        title: `${displayTitle} — Molotov`,
+        title: `${displayTitle} — Artiva`,
         description,
         type: "article",
       },
       twitter: {
         card: "summary_large_image",
-        title: `${displayTitle} — Molotov`,
+        title: `${displayTitle} — Artiva`,
         description,
       },
     };

@@ -6,7 +6,7 @@ import { es } from "./es";
 
 export type Locale = "es" | "en";
 
-const STORAGE_KEY = "molotov:locale";
+const STORAGE_KEY = "artiva:locale";
 const dictionaries = { es, en } as const;
 
 type Dictionary = typeof es;

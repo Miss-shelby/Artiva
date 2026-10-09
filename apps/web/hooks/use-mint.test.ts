@@ -28,7 +28,7 @@ vi.mock("@/hooks/use-wallet", () => ({
   useWallet: () => useWalletMock(),
 }));
 
-vi.mock("@molotov/stellar-client/molotov-nft", () => ({
+vi.mock("@artiva/stellar-client/artiva-nft", () => ({
   Client: vi.fn().mockImplementation(() => ({ mint: mintFnMock })),
   networks: {
     testnet: {

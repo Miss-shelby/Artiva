@@ -15,7 +15,7 @@ import { BrowsePageStates } from "@/components/browse-page-states";
 import { ArtworkCard } from "@/components/artwork-card";
 
 export const metadata: Metadata = {
-  title: "Discover — Molotov",
+  title: "Discover — Artiva",
   description: "Browse digital artworks with on-chain royalties on Stellar.",
 };
 

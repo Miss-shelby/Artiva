@@ -1,6 +1,6 @@
 # Indexer operations
 
-The Molotov indexer projects on-chain events (mint, transfer, burn, list, sold,
+The Artiva indexer projects on-chain events (mint, transfer, burn, list, sold,
 cancel, artist register/revoke) into Supabase. It is a single cursor-driven poller
 (`apps/web/app/api/indexer/poller.ts`) invoked either by a scheduler (production) or
 the local loop `apps/web/scripts/run-indexer.ts`.
@@ -36,7 +36,7 @@ window, the cursor falls out and events are lost. Two scheduler paths:
 - **Vercel Hobby plan → GitHub Actions (`.github/workflows/indexer-cron.yml`).**
   This is the ACTIVE scheduler. It curls `/api/indexer` with the `CRON_SECRET` bearer
   every ~5 min (GitHub's minimum; sometimes delayed, fine for testnet). Required repo
-  secrets: **`INDEXER_URL`** (deployed base URL, `https://molotov-web.vercel.app`) and
+  secrets: **`INDEXER_URL`** (deployed base URL, `https://artiva-web.vercel.app`) and
   **`CRON_SECRET`** (same value as the Vercel prod env var). Both are set.
 - **⚠️ Do NOT put a sub-daily `crons` entry in `apps/web/vercel.json` while on Hobby.**
   Vercel Hobby rejects any cron more frequent than daily and **fails the entire
@@ -64,7 +64,7 @@ Consequences, and what we decided for testnet:
   min) `/health` reported 503 permanently, which is worse than no alarm: a monitor that
   is always red tells you nothing. See the derivation in `config.ts`.
 - **`workflow_dispatch` is not throttled.** To force a poll right now:
-  `gh workflow run indexer-cron.yml --repo BuenDia-Builders/molotov`. Use it after any
+  `gh workflow run indexer-cron.yml --repo BuenDia-Builders/artiva`. Use it after any
   fix, before reading `/health`.
 - **Rejected: an external cron service** (cron-job.org, EasyCron, …). It would mean
   handing `CRON_SECRET` to a third-party vendor for a testnet freshness problem.
@@ -96,7 +96,7 @@ cost for testnet today.
 
 Migration, when the time comes:
 
-1. Upgrade the `molotov-web` project to Pro.
+1. Upgrade the `artiva-web` project to Pro.
 2. Re-add the `crons` entry to `apps/web/vercel.json` (it was removed in `55831d5`
    because Hobby rejected it — it is **not** in the file today):
    ```jsonc
@@ -166,18 +166,18 @@ above costs nothing.
 
 ## Deployment & CI
 
-- **Production:** `https://molotov-web.vercel.app` — Vercel project `molotov-web`
-  under team `molotovappart-5590s-projects`. (An older/stale `.vercel` link pointed at
+- **Production:** `https://artiva-web.vercel.app` — Vercel project `artiva-web`
+  under team `artivaappart-5590s-projects`. (An older/stale `.vercel` link pointed at
   a different team; re-link with
-  `vercel link --project molotov-web --scope molotovappart-5590s-projects`.)
+  `vercel link --project artiva-web --scope artivaappart-5590s-projects`.)
 - **Auto-deploy IS wired.** The project is git-connected to
-  `BuenDia-Builders/molotov`, `productionBranch = main`, `rootDirectory = apps/web`.
+  `BuenDia-Builders/artiva`, `productionBranch = main`, `rootDirectory = apps/web`.
   **A push to `main` triggers a production build automatically** — no manual
   `vercel --prod` needed.
 - **If a push seems not to deploy, check the Vercel deployments list for a FAILED
   build.** Auto-deploy fires, but if that commit's build errors, production silently
   stays on the last good commit. The classic cause here is the Hobby sub-daily-cron
-  blocker above. `vercel list molotov-web --scope molotovappart-5590s-projects` or the
+  blocker above. `vercel list artiva-web --scope artivaappart-5590s-projects` or the
   dashboard shows each commit's deploy state.
 - **Manual CLI deploy is NOT the supported path.** `vercel --prod` must run from the
   repo root (rootDirectory is `apps/web`), and it uploads the working tree — which in
@@ -195,7 +195,7 @@ bearer token, same fail-closed behavior. It must be set in **two** places with t
   Only deployments built AFTER it is set pick it up, so redeploy (or push) after
   adding/rotating it.
 - **GitHub** — repo secrets `CRON_SECRET` and `INDEXER_URL`
-  (`gh secret set … --repo BuenDia-Builders/molotov`), read by the cron workflow.
+  (`gh secret set … --repo BuenDia-Builders/artiva`), read by the cron workflow.
 
 To rotate: `openssl rand -hex 32`, update both places, redeploy. Never commit the value.
 

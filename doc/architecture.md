@@ -1,8 +1,8 @@
-# MOLOTOV — Architecture Documentation
+# ARTIVA — Architecture Documentation
 
 **An artist-first NFT marketplace, with royalties that actually follow the work.**
 
-This document describes the Molotov application architecture: what it does, which
+This document describes the Artiva application architecture: what it does, which
 Stellar tools it uses, how the contracts and the off-chain layer fit together, and the
 flows that connect them. Diagrams use [Mermaid](https://mermaid.js.org/) and render on
 GitHub. The imperative, phase-by-phase build order lives in `doc/BUILD_PLAN.md`; this
@@ -26,7 +26,7 @@ flowchart TB
     Admin["Admin / Curator"]
   end
 
-  subgraph App["Molotov application"]
+  subgraph App["Artiva application"]
     Web["Next.js web (apps/web)"]
     Mobile["Expo mobile (apps/mobile)"]
     API["API routes<br/>(IPFS pin, indexer cron, OG)"]
@@ -39,7 +39,7 @@ flowchart TB
   end
 
   subgraph Stellar["Stellar ecosystem"]
-    NFT["MolotovNft<br/>(SEP-50, Soroban)"]
+    NFT["ArtivaNft<br/>(SEP-50, Soroban)"]
     Registry["ArtistRegistry<br/>(Soroban)"]
     Market["Marketplace<br/>(Soroban)"]
     SAC["Stellar Asset Contract<br/>(XLM / USDC payments)"]
@@ -75,9 +75,9 @@ flowchart TB
   Indexer --> Supabase
 ```
 
-Molotov is a web (and later mobile) app where artists mint their work as NFTs on
+Artiva is a web (and later mobile) app where artists mint their work as NFTs on
 Stellar and sell it through a marketplace that enforces immutable royalties on every
-resale. Three Soroban contracts hold the on-chain logic: `MolotovNft` (the token),
+resale. Three Soroban contracts hold the on-chain logic: `ArtivaNft` (the token),
 `ArtistRegistry` (the minting gate), and `Marketplace` (listings, sales, and the
 atomic distribution of money). Media and metadata live on **IPFS** via Pinata. Browse,
 profiles, and activity are served from **Supabase**, which is a projection rebuilt from
@@ -106,7 +106,7 @@ sequenceDiagram
   participant Artist
   participant Web
   participant IPFS as IPFS (Pinata)
-  participant NFT as MolotovNft
+  participant NFT as ArtivaNft
   participant Registry as ArtistRegistry
   participant Market as Marketplace
   participant Collector
@@ -143,7 +143,7 @@ sequenceDiagram
 sequenceDiagram
   participant Seller as Seller (current owner)
   participant Market as Marketplace
-  participant NFT as MolotovNft
+  participant NFT as ArtivaNft
   participant Buyer
 
   Seller->>Market: list(token_id, price, currency, kind=FixedPrice, referral_bps)
@@ -256,7 +256,7 @@ flowchart TB
 ## 4. Project structure
 
 ```
-molotov/
+artiva/
 ├── apps/
 │   ├── web/                       # Next.js app
 │   │   ├── app/
@@ -285,7 +285,7 @@ molotov/
 │
 ├── contracts/                     # Rust workspace
 │   ├── Cargo.toml                 # Workspace
-│   ├── nft/                       # MolotovNft (SEP-50)
+│   ├── nft/                       # ArtivaNft (SEP-50)
 │   │   ├── src/lib.rs
 │   │   └── src/test.rs
 │   ├── artist-registry/           # ArtistRegistry (gate)
@@ -317,7 +317,7 @@ molotov/
 
 ```mermaid
 flowchart TB
-  Market["Marketplace"] -->|"get_royalty_info(token_id, price)"| NFT["MolotovNft"]
+  Market["Marketplace"] -->|"get_royalty_info(token_id, price)"| NFT["ArtivaNft"]
   Market -->|"transfer / escrow"| NFT
   Market -->|"token.transfer (payments)"| SAC["SAC (XLM/USDC)"]
   NFT -->|"is_registered(artist)"| Registry["ArtistRegistry"]
@@ -326,7 +326,7 @@ flowchart TB
   Admin -->|"set_registry / upgrade"| NFT
 ```
 
-### 5.1 MolotovNft (SEP-50)
+### 5.1 ArtivaNft (SEP-50)
 
 Non-fungible token on the OpenZeppelin SEP-50 base. `transfer`, `burn`, `owner_of`,
 `balance` come from the base; `token_uri` is overridden to serve per-token IPFS URIs.
@@ -390,7 +390,7 @@ Two distinct splits, not to be conflated:
 
 ```mermaid
 flowchart LR
-  Sale["Sale price (stroops)"] --> Fee["Molotov fee (fee_bps)"]
+  Sale["Sale price (stroops)"] --> Fee["Artiva fee (fee_bps)"]
   Sale --> Ref["Referral (referral_bps, if referrer)"]
   Sale --> RoyOrSplit{"Primary or secondary?"}
   RoyOrSplit -->|"primary"| Split["Artist split<br/>(N wallets, last absorbs dust)"]
@@ -403,7 +403,7 @@ closes exactly. All amounts are stroops (`i128`, 1 XLM = 10⁷). Arithmetic uses
 `checked_*` everywhere.
 
 **Royalty scope (deliberate):** royalties are honored when a sale goes through
-Molotov's marketplace. A raw `transfer` evades them; forcing payment inside `transfer`
+Artiva's marketplace. A raw `transfer` evades them; forcing payment inside `transfer`
 would break composability. This is the accepted industry standard, stated openly.
 
 ---
@@ -592,7 +592,7 @@ immutable regardless of code changes (no path rewrites it).
 | ------------------------------------- | ------------- | ----------------------------------------- |
 | `NEXT_PUBLIC_STELLAR_NETWORK`         | Public        | `testnet` or `mainnet`.                   |
 | `NEXT_PUBLIC_RPC_URL`                 | Public        | Stellar RPC endpoint.                     |
-| `NEXT_PUBLIC_NFT_CONTRACT_ID`         | Public        | MolotovNft contract ID.                   |
+| `NEXT_PUBLIC_NFT_CONTRACT_ID`         | Public        | ArtivaNft contract ID.                   |
 | `NEXT_PUBLIC_REGISTRY_CONTRACT_ID`    | Public        | ArtistRegistry contract ID.               |
 | `NEXT_PUBLIC_MARKETPLACE_CONTRACT_ID` | Public        | Marketplace contract ID.                  |
 | `NEXT_PUBLIC_PAYMENT_SAC`             | Public        | Payment SAC (XLM, later USDC).            |

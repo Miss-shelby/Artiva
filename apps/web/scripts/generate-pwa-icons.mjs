@@ -1,8 +1,8 @@
-// Generates the Molotov PWA / favicon set from a redrawn vector mark
-// (molotov bottle + flame), inspired by the official logo but adapted to a
+// Generates the Artiva PWA / favicon set from a redrawn vector mark
+// (artiva bottle + flame), inspired by the official logo but adapted to a
 // black background: off-white bottle (#F5F4ED) with blue accents, blue flame
 // (#0178DE, the canonical flame color sampled from the logo).
-// Run with: pnpm --filter @molotov/web icons:gen
+// Run with: pnpm --filter @artiva/web icons:gen
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import sharp from "sharp";

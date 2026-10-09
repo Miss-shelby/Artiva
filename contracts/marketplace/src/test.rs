@@ -6,7 +6,7 @@ use soroban_sdk::{
 
 use crate::{
     distribute, DataKey, DistMode, Listing, ListingKind, ListingStatus, MarketError,
-    MolotovMarketplace, MolotovMarketplaceClient, RoyaltyRecipient,
+    ArtivaMarketplace, ArtivaMarketplaceClient, RoyaltyRecipient,
 };
 use proptest::prelude::*;
 
@@ -827,11 +827,11 @@ fn setup() -> Ctx {
 
     let nft = e.register(MockNft, ());
     let sac = e.register_stellar_asset_contract_v2(admin.clone()).address();
-    let mkt = e.register(MolotovMarketplace, (admin.clone(), FEE_BPS, treasury.clone()));
+    let mkt = e.register(ArtivaMarketplace, (admin.clone(), FEE_BPS, treasury.clone()));
 
     token::StellarAssetClient::new(&e, &sac).mint(&buyer, &FUND);
-    MolotovMarketplaceClient::new(&e, &mkt).set_allowed_currency(&sac, &true);
-    MolotovMarketplaceClient::new(&e, &mkt).set_allowed_nft(&nft, &true);
+    ArtivaMarketplaceClient::new(&e, &mkt).set_allowed_currency(&sac, &true);
+    ArtivaMarketplaceClient::new(&e, &mkt).set_allowed_nft(&nft, &true);
 
     Ctx { e, mkt, nft, sac, treasury, seller, buyer, artist }
 }
@@ -872,7 +872,7 @@ fn p3_secondary_buy_conserves_zero_residual() {
     seed_listing(&c, 2000, None, 200, ListingKind::FixedPrice, &c.sac);
 
     let no_ref: Option<Address> = None;
-    MolotovMarketplaceClient::new(&c.e, &c.mkt).buy(&c.buyer, &0u64, &no_ref);
+    ArtivaMarketplaceClient::new(&c.e, &c.mkt).buy(&c.buyer, &0u64, &no_ref);
 
     assert_eq!(bal(&c, &c.treasury), 50_000_000); // fee 5%, no referrer
     assert_eq!(bal(&c, &c.artist), 200_000_000); // royalty 20%
@@ -896,7 +896,7 @@ fn p3_primary_buy_conserves_zero_residual() {
     seed_listing(&c, 1000, Some(split), 0, ListingKind::FixedPrice, &c.sac);
 
     let no_ref: Option<Address> = None;
-    MolotovMarketplaceClient::new(&c.e, &c.mkt).buy(&c.buyer, &0u64, &no_ref);
+    ArtivaMarketplaceClient::new(&c.e, &c.mkt).buy(&c.buyer, &0u64, &no_ref);
 
     // distributable = P - fee = 950M; 60/40 split.
     assert_eq!(bal(&c, &c.treasury), 50_000_000);
@@ -1148,7 +1148,7 @@ fn secondary_buy_with_referrer_splits_fee() {
     let referrer = Address::generate(&c.e);
     seed_listing(&c, 2000, None, 200, ListingKind::FixedPrice, &c.sac);
 
-    MolotovMarketplaceClient::new(&c.e, &c.mkt).buy(&c.buyer, &0u64, &Some(referrer.clone()));
+    ArtivaMarketplaceClient::new(&c.e, &c.mkt).buy(&c.buyer, &0u64, &Some(referrer.clone()));
 
     assert_eq!(bal(&c, &c.treasury), 30_000_000);
     assert_eq!(bal(&c, &referrer), 20_000_000);
@@ -1164,7 +1164,7 @@ fn secondary_buy_with_referrer_splits_fee() {
 fn p13_second_buy_fails() {
     let c = setup();
     seed_listing(&c, 2000, None, 0, ListingKind::FixedPrice, &c.sac);
-    let client = MolotovMarketplaceClient::new(&c.e, &c.mkt);
+    let client = ArtivaMarketplaceClient::new(&c.e, &c.mkt);
     let no_ref: Option<Address> = None;
 
     client.buy(&c.buyer, &0u64, &no_ref); // first succeeds
@@ -1182,7 +1182,7 @@ fn p14_disallowed_currency_rejected() {
     seed_listing(&c, 2000, None, 0, ListingKind::FixedPrice, &other);
 
     let no_ref: Option<Address> = None;
-    let r = MolotovMarketplaceClient::new(&c.e, &c.mkt).try_buy(&c.buyer, &0u64, &no_ref);
+    let r = ArtivaMarketplaceClient::new(&c.e, &c.mkt).try_buy(&c.buyer, &0u64, &no_ref);
     assert!(r.is_err());
 }
 
@@ -1193,7 +1193,7 @@ fn p15_self_referral_buyer_zeroes_referral() {
     let c = setup();
     seed_listing(&c, 2000, None, 200, ListingKind::FixedPrice, &c.sac);
 
-    MolotovMarketplaceClient::new(&c.e, &c.mkt).buy(&c.buyer, &0u64, &Some(c.buyer.clone()));
+    ArtivaMarketplaceClient::new(&c.e, &c.mkt).buy(&c.buyer, &0u64, &Some(c.buyer.clone()));
 
     assert_eq!(bal(&c, &c.treasury), 50_000_000); // FULL fee, not 30M
     assert_eq!(bal(&c, &c.buyer), FUND - PRICE); // no referral rebate to the buyer
@@ -1210,7 +1210,7 @@ fn p15_self_referral_seller_zeroes_referral() {
     let c = setup();
     seed_listing(&c, 2000, None, 200, ListingKind::FixedPrice, &c.sac);
 
-    MolotovMarketplaceClient::new(&c.e, &c.mkt).buy(&c.buyer, &0u64, &Some(c.seller.clone()));
+    ArtivaMarketplaceClient::new(&c.e, &c.mkt).buy(&c.buyer, &0u64, &Some(c.seller.clone()));
 
     assert_eq!(bal(&c, &c.treasury), 50_000_000); // full fee
     assert_eq!(bal(&c, &c.seller), 750_000_000); // remainder only, no referral
@@ -1224,7 +1224,7 @@ fn p16_auction_buy_not_implemented() {
     let c = setup();
     seed_listing(&c, 2000, None, 0, ListingKind::Auction, &c.sac);
     let no_ref: Option<Address> = None;
-    let r = MolotovMarketplaceClient::new(&c.e, &c.mkt).try_buy(&c.buyer, &0u64, &no_ref);
+    let r = ArtivaMarketplaceClient::new(&c.e, &c.mkt).try_buy(&c.buyer, &0u64, &no_ref);
     assert!(r.is_err());
 }
 
@@ -1240,7 +1240,7 @@ fn sold_event_fields() {
     let c = setup();
     let referrer = Address::generate(&c.e);
     seed_listing(&c, 2000, None, 200, ListingKind::FixedPrice, &c.sac);
-    MolotovMarketplaceClient::new(&c.e, &c.mkt).buy(&c.buyer, &0u64, &Some(referrer.clone()));
+    ArtivaMarketplaceClient::new(&c.e, &c.mkt).buy(&c.buyer, &0u64, &Some(referrer.clone()));
 
     let expected = Sold {
         listing_id: 0,
@@ -1296,8 +1296,8 @@ fn sold_event_referral_no_address_collision() {
 
 use crate::{ListingCancelled, ListingCreated};
 
-fn mkt_client(c: &Ctx) -> MolotovMarketplaceClient<'_> {
-    MolotovMarketplaceClient::new(&c.e, &c.mkt)
+fn mkt_client(c: &Ctx) -> ArtivaMarketplaceClient<'_> {
+    ArtivaMarketplaceClient::new(&c.e, &c.mkt)
 }
 fn nft_owner(c: &Ctx, token_id: u32) -> Address {
     MockNftClient::new(&c.e, &c.nft).owner_of(&token_id)
@@ -1489,9 +1489,9 @@ fn set_allowed_nft_requires_owner_auth() {
     let e = Env::default();
     let admin = Address::generate(&e);
     let treasury = Address::generate(&e);
-    let mkt = e.register(MolotovMarketplace, (admin, FEE_BPS, treasury));
+    let mkt = e.register(ArtivaMarketplace, (admin, FEE_BPS, treasury));
     let nft = Address::generate(&e);
-    MolotovMarketplaceClient::new(&e, &mkt).set_allowed_nft(&nft, &true);
+    ArtivaMarketplaceClient::new(&e, &mkt).set_allowed_nft(&nft, &true);
 }
 
 /// `fee_bps` has no setter anywhere in this contract — a bad value at deploy
@@ -1504,7 +1504,7 @@ fn constructor_rejects_fee_bps_above_100_percent() {
     let e = Env::default();
     let admin = Address::generate(&e);
     let treasury = Address::generate(&e);
-    e.register(MolotovMarketplace, (admin, 10_001u32, treasury));
+    e.register(ArtivaMarketplace, (admin, 10_001u32, treasury));
 }
 
 /// The boundary itself — exactly 100% fee — is still accepted.
@@ -1513,7 +1513,7 @@ fn constructor_accepts_fee_bps_at_100_percent() {
     let e = Env::default();
     let admin = Address::generate(&e);
     let treasury = Address::generate(&e);
-    e.register(MolotovMarketplace, (admin, 10_000u32, treasury));
+    e.register(ArtivaMarketplace, (admin, 10_000u32, treasury));
 }
 
 #[test]
@@ -1830,9 +1830,9 @@ fn set_allowed_currency_requires_owner_auth() {
     let e = Env::default();
     let admin = Address::generate(&e);
     let treasury = Address::generate(&e);
-    let mkt = e.register(MolotovMarketplace, (admin, FEE_BPS, treasury));
+    let mkt = e.register(ArtivaMarketplace, (admin, FEE_BPS, treasury));
     let sac = Address::generate(&e);
-    MolotovMarketplaceClient::new(&e, &mkt).set_allowed_currency(&sac, &true);
+    ArtivaMarketplaceClient::new(&e, &mkt).set_allowed_currency(&sac, &true);
 }
 
 /// Only the owner can upgrade the contract (no auth mocked → the gate panics).
@@ -1843,9 +1843,9 @@ fn upgrade_requires_owner_auth() {
     let e = Env::default();
     let admin = Address::generate(&e);
     let treasury = Address::generate(&e);
-    let mkt = e.register(MolotovMarketplace, (admin, FEE_BPS, treasury));
+    let mkt = e.register(ArtivaMarketplace, (admin, FEE_BPS, treasury));
     let dummy = BytesN::from_array(&e, &[0u8; 32]);
-    MolotovMarketplaceClient::new(&e, &mkt).upgrade(&dummy);
+    ArtivaMarketplaceClient::new(&e, &mkt).upgrade(&dummy);
 }
 
 /// The constructor stores fee and treasury (and the owner — exercised by `setup`

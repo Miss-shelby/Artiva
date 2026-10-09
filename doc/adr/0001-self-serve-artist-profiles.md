@@ -10,7 +10,7 @@ are team-curated: the service role writes them, RLS blocks everything else.
 That is fine for the current cohort size, but it does not scale and it makes
 the team a bottleneck for something that belongs to the artist.
 
-Molotov has no server-side accounts on purpose — identity _is_ the Stellar
+Artiva has no server-side accounts on purpose — identity _is_ the Stellar
 address. So "the artist edits their own profile" must mean "someone who can
 sign with the artist's key edits the profile", not "someone logged into an
 account". This ADR proposes that mechanism; it is deliberately **out of scope**
@@ -30,7 +30,7 @@ A signed-message flow, no transaction and no fees:
    style, human-readable so wallets can display what is being approved):
 
    ```
-   molotov:profile-update:v1
+   artiva:profile-update:v1
    address:<G...>
    nonce:<uuid>
    issued_at:<ISO-8601>
@@ -61,7 +61,7 @@ A signed-message flow, no transaction and no fees:
 
 ## Consequences
 
-- The artist owns their handle and bio without Molotov holding any account
+- The artist owns their handle and bio without Artiva holding any account
   state beyond a short-lived nonce table.
 - Replay is blocked by the single-use nonce; cross-site reuse is blocked
   because the address is inside the signed payload; a stolen signature for v1

@@ -6,7 +6,7 @@ use soroban_sdk::{
     vec, Address, BytesN, Env, String, Vec,
 };
 
-use crate::{MolotovNft, MolotovNftClient, RoyaltyRecipient};
+use crate::{ArtivaNft, ArtivaNftClient, RoyaltyRecipient};
 
 // --- Mock ArtistRegistry, used to exercise the cross-contract gate. ---
 #[contract]
@@ -27,18 +27,18 @@ fn placeholder(e: &Env) -> Address {
 }
 
 /// Deploy with the placeholder registry (gate disabled).
-fn deploy(e: &Env) -> (MolotovNftClient<'_>, Address) {
+fn deploy(e: &Env) -> (ArtivaNftClient<'_>, Address) {
     let admin = Address::generate(e);
     let id = e.register(
-        MolotovNft,
+        ArtivaNft,
         (
             admin.clone(),
             placeholder(e),
-            String::from_str(e, "Molotov"),
+            String::from_str(e, "Artiva"),
             String::from_str(e, "MOLO"),
         ),
     );
-    (MolotovNftClient::new(e, &id), admin)
+    (ArtivaNftClient::new(e, &id), admin)
 }
 
 fn one_recipient(e: &Env, who: &Address) -> Vec<RoyaltyRecipient> {
@@ -318,15 +318,15 @@ fn test_mint_rejects_unregistered_artist() {
     let registry = e.register(MockRegistry, (false,));
     let admin = Address::generate(&e);
     let id = e.register(
-        MolotovNft,
+        ArtivaNft,
         (
             admin,
             registry,
-            String::from_str(&e, "Molotov"),
+            String::from_str(&e, "Artiva"),
             String::from_str(&e, "MOLO"),
         ),
     );
-    let client = MolotovNftClient::new(&e, &id);
+    let client = ArtivaNftClient::new(&e, &id);
     let artist = Address::generate(&e);
     client.mint(
         &artist,
@@ -345,15 +345,15 @@ fn test_mint_accepts_registered_artist() {
     let registry = e.register(MockRegistry, (true,));
     let admin = Address::generate(&e);
     let id = e.register(
-        MolotovNft,
+        ArtivaNft,
         (
             admin,
             registry,
-            String::from_str(&e, "Molotov"),
+            String::from_str(&e, "Artiva"),
             String::from_str(&e, "MOLO"),
         ),
     );
-    let client = MolotovNftClient::new(&e, &id);
+    let client = ArtivaNftClient::new(&e, &id);
     let artist = Address::generate(&e);
     let token_id = client.mint(
         &artist,
@@ -721,15 +721,15 @@ fn test_mint_and_read_extend_persistent_ttl() {
     e.mock_all_auths();
     let admin = Address::generate(&e);
     let id = e.register(
-        MolotovNft,
+        ArtivaNft,
         (
             admin,
             placeholder(&e),
-            String::from_str(&e, "Molotov"),
+            String::from_str(&e, "Artiva"),
             String::from_str(&e, "MOLO"),
         ),
     );
-    let client = MolotovNftClient::new(&e, &id);
+    let client = ArtivaNftClient::new(&e, &id);
 
     let artist = Address::generate(&e);
     let token_id = client.mint(

@@ -19,10 +19,10 @@ describe("EventContent", () => {
     render(<EventContent />);
 
     const wallet = screen.getByAltText("event.qrWalletAlt") as HTMLImageElement;
-    const molotov = screen.getByAltText("event.qrMolotovAlt") as HTMLImageElement;
+    const artiva = screen.getByAltText("event.qrArtivaAlt") as HTMLImageElement;
 
     expect(wallet.src).toContain("qr-wallet.png");
-    expect(molotov.src).toContain("qr-molotov.png");
+    expect(artiva.src).toContain("qr-artiva.png");
   });
 
   it("renders the three-step guide in order", () => {

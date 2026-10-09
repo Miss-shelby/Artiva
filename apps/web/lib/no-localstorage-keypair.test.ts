@@ -9,7 +9,7 @@ import { dirname, join, resolve } from "node:path";
 //
 // The needles are assembled from fragments on purpose, so this test's own source
 // does not contain the contiguous strings it searches for.
-const FORBIDDEN = ["Keypair" + ".random", "molotov_stellar" + "_kp", "molotov_" + "funded"];
+const FORBIDDEN = ["Keypair" + ".random", "artiva_stellar" + "_kp", "artiva_" + "funded"];
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const WEB_ROOT = resolve(HERE, ".."); // apps/web

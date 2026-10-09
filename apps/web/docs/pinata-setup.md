@@ -1,6 +1,6 @@
 # Pinata (IPFS) — setup de credencial
 
-Molotov sube las imágenes y la metadata de cada obra a IPFS vía
+Artiva sube las imágenes y la metadata de cada obra a IPFS vía
 [Pinata](https://pinata.cloud) (el pinning provider estándar de facto en NFTs —
 lo usan OpenSea, Foundation, etc.). Free tier de 1 GB, suficiente para el MVP.
 
@@ -32,7 +32,7 @@ credencial nunca llega al browser. Pinata usa un **JWT** simple (no UCAN).
    > `401 Not Authorized` aunque la key autentique bien. Si preferís no
    > pelearte con scopes, una key **Admin** funciona para todo.
 
-5. Nombrar la key (ej: `molotov-api`) y crearla.
+5. Nombrar la key (ej: `artiva-api`) y crearla.
 
 6. **Copiar el JWT** que Pinata muestra **una sola vez** (no el API Key ni el
    API Secret — el **JWT**, que empieza con `eyJ...`).
@@ -44,7 +44,7 @@ credencial nunca llega al browser. Pinata usa un **JWT** simple (no UCAN).
 
 8. **Reiniciar el dev server** para que tome la variable:
    ```bash
-   pnpm --filter @molotov/web dev
+   pnpm --filter @artiva/web dev
    ```
 
 ## Probar

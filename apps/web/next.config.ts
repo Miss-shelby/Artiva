@@ -50,7 +50,7 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
-  transpilePackages: ["@molotov/stellar-client"],
+  transpilePackages: ["@artiva/stellar-client"],
   images: {
     dangerouslyAllowSVG: true,
     contentDispositionType: "attachment",

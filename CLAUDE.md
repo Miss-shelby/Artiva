@@ -3,11 +3,11 @@
 Working notes for AI assistants in this repo. Public information only — everything here
 is already in the code or the README.
 
-## What Molotov is
+## What Artiva is
 
 A digital art marketplace on Stellar/Soroban where **the royalty is enforced by the
 contract, not by the platform**. Major NFT marketplaces made royalties optional to
-compete on fees; Molotov makes them mandatory at the contract level. The premise is
+compete on fees; Artiva makes them mandatory at the contract level. The premise is
 _inverted Spotify_: income flows **to** the creator, not away from them.
 
 This premise is the product. When a change would weaken it, say so before implementing.

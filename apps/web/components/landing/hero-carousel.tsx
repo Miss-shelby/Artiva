@@ -18,15 +18,6 @@ export type HeroSlide = {
 
 const ADVANCE_MS = 6000;
 
-/**
- * The first thing anyone sees: a short, plain statement of what Molotov is,
- * a dual artist/collector CTA (both reachable with zero scrolling), and a
- * *contained* artwork panel — not a 100vw banner, so a lower-resolution
- * upload doesn't read as a broken hero. The text panel renders even with an
- * empty catalog (`slides.length === 0`); only the image panel disappears —
- * previously the whole hero vanished on an empty DB, leaving the value prop
- * unstated until the user scrolled past it.
- */
 export function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
   const { t } = useI18n();
   const [index, setIndex] = useState(0);
@@ -48,47 +39,62 @@ export function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
   const active = slides.length > 0 ? slides[Math.min(index, slides.length - 1)] : null;
 
   return (
-    <section className="w-full bg-[var(--black)] px-6 py-14 md:px-12 md:py-20">
-      <div className="mx-auto flex max-w-6xl flex-col gap-10 md:flex-row md:items-center md:gap-16">
-        {/* Text panel — the value prop, stated plainly, always rendered */}
-        <div className="flex flex-col gap-6 md:w-[42%] md:shrink-0">
-          <h1 className="font-[family-name:var(--font-display)] text-[clamp(2.25rem,6vw,3.25rem)] font-bold leading-[1.05] text-white">
-            {t("landing.hero.headlineBefore")}
-            <em className="font-[family-name:var(--font-editorial)] font-medium italic text-[var(--blue)]">
+    <section className="relative w-full overflow-hidden bg-[#07080D] px-6 py-16 md:px-12 md:py-24">
+      {/* Background glowing ambient light blobs */}
+      <div className="flame-blob -top-20 -left-20 h-96 w-96 bg-violet-600/20" />
+      <div className="flame-blob bottom-0 right-0 h-96 w-96 bg-cyan-600/15" />
+
+      <div className="relative z-10 mx-auto flex max-w-7xl flex-col gap-12 md:flex-row md:items-center md:gap-16">
+        {/* Value Proposition Hero Header */}
+        <div className="flex flex-col gap-6 md:w-[46%] md:shrink-0">
+          <div className="inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 px-3.5 py-1.5 w-fit">
+            <span className="h-2 w-2 rounded-full bg-violet-400 animate-pulse" />
+            <span className="font-mono text-xs uppercase tracking-widest text-violet-300">
+              IMMUTABLE ON-CHAIN ROYALTIES
+            </span>
+          </div>
+
+          <h1 className="font-sans text-[clamp(2.5rem,5.5vw,3.75rem)] font-extrabold leading-[1.05] tracking-tight text-white">
+            {t("landing.hero.headlineBefore")}{" "}
+            <span className="gradient-accent-text">
               {t("landing.hero.headlineEm")}
-            </em>
+            </span>{" "}
             {t("landing.hero.headlineAfter")}
           </h1>
-          <p className="max-w-md text-base leading-relaxed text-white/70">
+
+          <p className="max-w-lg text-base leading-relaxed text-zinc-400">
             {t("landing.tagline.description")}
           </p>
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center pt-2">
             <Link
               href="/create"
-              className="inline-flex h-12 items-center justify-center rounded-soft bg-[var(--blue)] px-7 text-[15px] font-medium text-white transition-colors hover:bg-[var(--blue-light)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--offwhite)]"
+              className="inline-flex h-13 items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-8 font-sans font-semibold text-white shadow-lg shadow-violet-500/25 transition-all hover:brightness-110 hover:shadow-violet-500/40"
             >
               {t("common.mintFirst")}
             </Link>
             <Link
               href="/works"
-              className="inline-flex h-12 items-center px-2 font-[family-name:var(--font-mono)] text-[14px] text-[var(--offwhite)]/70 underline underline-offset-4 transition-colors hover:text-[var(--offwhite)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--blue)]"
+              className="inline-flex h-13 items-center justify-center rounded-xl border border-white/15 bg-white/[0.04] px-6 font-mono text-xs uppercase tracking-wider text-zinc-300 backdrop-blur-md transition-all hover:bg-white/[0.1] hover:text-white"
             >
               {t("common.collectorsSeeWorks")}
             </Link>
           </div>
         </div>
 
-        {/* Image panel — contained, not full-bleed; hidden entirely on an empty catalog */}
+        {/* Featured Artwork Display Panel */}
         {active && (
           <div
-            className="relative aspect-[4/5] w-full overflow-hidden bg-[var(--carbon)] md:aspect-[4/5] md:w-[58%] md:max-h-[560px]"
+            className="group relative aspect-[4/5] w-full overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/60 shadow-2xl backdrop-blur-md md:aspect-[4/5] md:w-[54%] md:max-h-[580px]"
             onMouseEnter={() => setPaused(true)}
             onMouseLeave={() => setPaused(false)}
           >
             {slides.map((slide, i) => (
               <div
                 key={slide.tokenId}
-                className={`absolute inset-0 transition-opacity duration-700 ${i === index ? "opacity-100" : "opacity-0"}`}
+                className={`absolute inset-0 transition-all duration-700 ${
+                  i === index ? "opacity-100 scale-100" : "opacity-0 scale-105"
+                }`}
                 aria-hidden={i !== index}
               >
                 <Image
@@ -96,66 +102,83 @@ export function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
                   alt={slide.title}
                   fill
                   className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 58vw"
+                  sizes="(max-width: 768px) 100vw, 54vw"
                   priority={i === 0}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#07080D] via-black/20 to-transparent" />
               </div>
             ))}
 
-            {/* Caption */}
+            {/* Artwork Details Glass Badge Overlay */}
             <Link
               href={`/token/${active.tokenId}`}
-              className="absolute bottom-6 left-5 z-10 flex flex-col gap-1"
+              className="absolute bottom-6 left-6 right-6 z-20 rounded-xl border border-white/15 bg-black/60 p-5 backdrop-blur-xl transition-all duration-300 hover:border-violet-500/50 hover:bg-black/75"
             >
-              <span className="font-[family-name:var(--font-display)] text-xl font-bold leading-tight text-white md:text-2xl">
-                {active.title}
-              </span>
-              <span className="font-[family-name:var(--font-mono)] text-[11px] text-white/70">
-                {active.artistHandle ?? truncateAddress(active.artist, 4, 4)}
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <h3 className="font-sans text-xl font-bold text-white group-hover:text-violet-300 transition-colors">
+                    {active.title}
+                  </h3>
+                  <p className="mt-1 font-mono text-xs text-zinc-400">
+                    Created by <span className="text-zinc-200 font-semibold">{active.artistHandle ?? truncateAddress(active.artist, 4, 4)}</span>
+                  </p>
+                </div>
                 {active.priceXlm && (
-                  <span className="ml-3 text-[var(--blue-light)]">
-                    {t("landing.hero.forSale")} · {active.priceXlm} XLM
+                  <div className="text-right">
+                    <div className="font-mono text-base font-bold text-cyan-400">
+                      {active.priceXlm} XLM
+                    </div>
                     {active.priceUsd && (
-                      <span className="text-white/50"> · ~US$ {active.priceUsd}</span>
+                      <div className="font-mono text-[11px] text-zinc-400">
+                        ~${active.priceUsd} USD
+                      </div>
                     )}
-                  </span>
+                  </div>
                 )}
-              </span>
-              <span className="mt-2 w-fit border border-white/40 px-3 py-1 font-[family-name:var(--font-mono)] text-[10px] uppercase tracking-[0.2em] text-white transition-colors hover:border-white">
-                {t("landing.hero.viewWork")} →
-              </span>
+              </div>
+
+              <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-3">
+                <span className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-violet-400">
+                  <span className="h-1.5 w-1.5 rounded-full bg-violet-400" />
+                  10% Permanent Royalty
+                </span>
+                <span className="font-mono text-[11px] text-zinc-300 hover:text-white font-semibold flex items-center gap-1">
+                  {t("landing.hero.viewWork")} →
+                </span>
+              </div>
             </Link>
 
-            {/* Prev / next arrows */}
+            {/* Slider Controls */}
             {slides.length > 1 && (
               <>
                 <button
-                  aria-label="‹"
+                  aria-label="Previous slide"
                   onClick={() => setIndex((i) => (i - 1 + slides.length) % slides.length)}
-                  className="absolute left-3 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center bg-black/30 text-2xl leading-none text-white/80 backdrop-blur-sm transition-colors hover:bg-black/50 hover:text-white"
+                  className="absolute left-4 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-black/40 text-xl text-white/80 backdrop-blur-md transition-all hover:bg-black/70 hover:text-white"
                 >
                   ‹
                 </button>
                 <button
-                  aria-label="›"
+                  aria-label="Next slide"
                   onClick={() => setIndex((i) => (i + 1) % slides.length)}
-                  className="absolute right-3 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center bg-black/30 text-2xl leading-none text-white/80 backdrop-blur-sm transition-colors hover:bg-black/50 hover:text-white"
+                  className="absolute right-4 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-black/40 text-xl text-white/80 backdrop-blur-md transition-all hover:bg-black/70 hover:text-white"
                 >
                   ›
                 </button>
               </>
             )}
 
-            {/* Dots */}
+            {/* Indicators */}
             {slides.length > 1 && (
-              <div className="absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 gap-2">
+              <div className="absolute top-4 right-4 z-20 flex gap-1.5 rounded-full bg-black/40 px-3 py-1.5 backdrop-blur-md">
                 {slides.map((slide, i) => (
                   <button
                     key={slide.tokenId}
-                    aria-label={`${t("landing.hero.slideLabel")} #${slide.tokenId}`}
+                    aria-label={`Go to slide #${slide.tokenId}`}
                     onClick={() => setIndex(i)}
-                    className={`h-2 w-2 rounded-full transition-colors ${i === index ? "bg-white" : "bg-white/35 hover:bg-white/60"}`}
+                    className={`h-1.5 rounded-full transition-all ${
+                      i === index ? "w-6 bg-cyan-400" : "w-1.5 bg-white/40 hover:bg-white/70"
+                    }`}
                   />
                 ))}
               </div>

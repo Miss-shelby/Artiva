@@ -1,5 +1,5 @@
 [package]
-name = "molotov-artist-registry"
+name = "artiva-artist-registry"
 edition.workspace = true
 license.workspace = true
 version.workspace = true

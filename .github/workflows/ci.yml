@@ -63,7 +63,7 @@ jobs:
         run: pnpm lint
 
       # Scoped to the web package on purpose. The other test package,
-      # @molotov/indexer-db-tests, is an integration suite that talks to a local
+      # @artiva/indexer-db-tests, is an integration suite that talks to a local
       # Supabase over Docker (`supabase start`) — without it every test fails on a
       # connection error, which would make CI permanently red and therefore ignored.
       # Running it here needs the local stack booted first; worth a separate job.

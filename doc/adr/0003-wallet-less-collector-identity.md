@@ -12,7 +12,7 @@ immutable, so a frictionless buyer path stays open."
 
 Since then, PR #76 shipped an identity-only social login (email / Google via Privy,
 `apps/web/providers/privy-provider.tsx`, `embeddedWallets: { createOnLogin: "off" }`).
-It creates no keypair and persists no record anywhere in Molotov's own storage —
+It creates no keypair and persists no record anywhere in Artiva's own storage —
 `useSignedIn()` (`apps/web/hooks/use-signed-in.ts`) reads only Privy's own client-side
 session. Today it gates exactly one thing: the "Get Started" onboarding screen
 (`apps/web/components/get-started-content.tsx`). It cannot buy, own, or appear as

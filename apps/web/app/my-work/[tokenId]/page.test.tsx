@@ -2,7 +2,7 @@
 //
 // Proves the claim from the ground-truth audit: verifying who owns a token
 // on this page does NOT depend on Supabase/the indexer. It's a real render
-// test (Client from @molotov/stellar-client is mocked, nothing about
+// test (Client from @artiva/stellar-client is mocked, nothing about
 // @/lib/db is touched or mocked at all) plus a static check mirroring the
 // existing lib/no-localstorage-keypair.test.ts pattern — belt and suspenders.
 //
@@ -27,7 +27,7 @@ vi.mock("next/navigation", () => ({
   useSearchParams: () => new URLSearchParams(),
 }));
 
-vi.mock("@molotov/stellar-client/molotov-nft", () => ({
+vi.mock("@artiva/stellar-client/artiva-nft", () => ({
   Client: vi.fn().mockImplementation(() => ({
     owner_of: ownerOfMock,
     royalty_bps: royaltyBpsMock,

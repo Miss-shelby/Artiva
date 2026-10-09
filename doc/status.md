@@ -34,7 +34,7 @@ Everything is on **Stellar testnet**. There is no mainnet deployment.
 
 | Contract       | ID                                                         | Source                                                                                  |
 | -------------- | ---------------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| MolotovNFT     | `CBS6UQE542PLU54SVUIK76EKWUJ3CNPOQ35IB4WXKF3BU6YDIBEC7XWS` | `apps/web/lib/stellar.ts`                                                               |
+| ArtivaNFT     | `CBS6UQE542PLU54SVUIK76EKWUJ3CNPOQ35IB4WXKF3BU6YDIBEC7XWS` | `apps/web/lib/stellar.ts`                                                               |
 | Marketplace    | `CB6T6DOYV2JCD36ZE43ESXNGCL2GBDARCZNRVYQWOXGTZNJBWB72K7DU` | `apps/web/lib/stellar.ts`                                                               |
 | ArtistRegistry | `CC37LTUPS5WLNBQSVNJJGBMZK4QCUJ76EFGW4RGY7XNVLKFKXCRGU533` | `apps/web/app/api/indexer/config.ts` — **deployed but not wired into the NFT** (see §3) |
 | Native XLM SAC | `CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC` | only allowlisted settlement currency                                                    |
@@ -49,7 +49,7 @@ multisig/timelock yet.
 - **List** a token into marketplace escrow and **buy** it, with the creator's royalty paid before a secondary sale can close.
 - **Enforce the royalty on every _marketplace_ resale** by a non-creator — the only royalty-skipping path (a primary-sale split) is gated to the token's minter.
 - **Settle only in the allowlisted currency** (native XLM SAC); the currency allowlist is checked at both `list` and `buy`.
-- **Settle only through the allowlisted NFT contract** (MolotovNFT); same shape as the currency allowlist, checked at both `list` and `buy`, proven in the sandboxed contract test suite. A live `buy` simulation against real testnet listings confirmed this once (2026-09-07); a later attempt to reproduce it cleanly did not succeed — see §5.
+- **Settle only through the allowlisted NFT contract** (ArtivaNFT); same shape as the currency allowlist, checked at both `list` and `buy`, proven in the sandboxed contract test suite. A live `buy` simulation against real testnet listings confirmed this once (2026-09-07); a later attempt to reproduce it cleanly did not succeed — see §5.
 - **Take a 2.5% platform fee**, with an optional **referral** carved out of that fee (never added on top).
 - **Project on-chain events** (mint / transfer / burn / listing / sale / registry) into a read-only Supabase mirror via the indexer, with a `/api/indexer/health` endpoint.
 - **Show artist earnings** (royalties, fees, referrals) read from that projection.
@@ -61,7 +61,7 @@ multisig/timelock yet.
 
 The mint gate is **disabled on-chain — any wallet can mint.**
 
-`MolotovNFT.mint` calls `require_registered_artist`, which reads the NFT's stored
+`ArtivaNFT.mint` calls `require_registered_artist`, which reads the NFT's stored
 `registry` pointer and **returns early (gate disabled) when it equals the all-zeros
 placeholder** `CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABSC4`
 (`TEMP_REGISTRY_PLACEHOLDER` in `contracts/nft/src/lib.rs`). Only when the pointer is a
@@ -86,7 +86,7 @@ Activating the gate is one owner call: `NFT.set_registry(<real registry>)`.
   projection tables once a day (`doc/indexer-operations.md` § Backups, including the
   restore procedure). A stalled or reset cursor within the retention window still needs
   manual recovery (same doc).
-- **The database security suite has no CI.** `@molotov/indexer-db-tests` (RLS, the
+- **The database security suite has no CI.** `@artiva/indexer-db-tests` (RLS, the
   `SECURITY DEFINER` writers, `apply_*` idempotency) needs a local Supabase/Docker and is
   excluded from CI — it runs only when someone runs it by hand. Details in §5.
 - **Testnet only.** No mainnet deployment; `apps/mobile` is an empty placeholder.
@@ -108,7 +108,7 @@ read as the same thing:
   already consumed. That's the shared testnet having real concurrent activity, not a sign
   the allowlist regressed — but a flaky read is not evidence, so this stays open rather
   than getting marked confirmed on the strength of one ambiguous pass.
-- **RLS + indexer idempotency.** All 25 tests in `@molotov/indexer-db-tests` exist and are
+- **RLS + indexer idempotency.** All 25 tests in `@artiva/indexer-db-tests` exist and are
   well-formed, but need a full local Supabase stack (`supabase start`), which needs a
   container runtime. Confirmed directly: neither `docker` nor `podman` is on `PATH` in a
   normal dev checkout, and `supabase start` fails immediately with

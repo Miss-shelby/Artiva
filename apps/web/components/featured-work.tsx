@@ -62,7 +62,7 @@ function WorkCard({ work, slot }: { work?: Work; slot: number }) {
           #{String(work?.token_id ?? slot).padStart(3, "0")}
         </span>
         <span className="font-[family-name:var(--font-mono)] text-[9px] tracking-[0.2em] text-[var(--offwhite)]/20">
-          STELLAR · MOLOTOV
+          STELLAR · ARTIVA
         </span>
       </div>
 
@@ -165,7 +165,7 @@ export async function FeaturedWork() {
             Recent <em className="italic text-[var(--blue)]">works</em>
           </h2>
           <p className="mt-8 max-w-md text-base leading-[1.75] text-[var(--black)]/60">
-            Every piece minted on Molotov lives on Stellar with on-chain royalties — forever
+            Every piece minted on Artiva lives on Stellar with on-chain royalties — forever
             enforced, no middlemen.
           </p>
         </div>

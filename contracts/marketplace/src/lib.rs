@@ -1,4 +1,4 @@
-//! Marketplace — listings, sales, and atomic money distribution for Molotov.
+//! Marketplace — listings, sales, and atomic money distribution for Artiva.
 //!
 //! Escrow model: the NFT moves into this contract on `list` and out to the buyer
 //! on `buy`. The contract **never custodies funds** — it orchestrates
@@ -411,10 +411,10 @@ pub fn distribute_full(
 }
 
 #[contract]
-pub struct MolotovMarketplace;
+pub struct ArtivaMarketplace;
 
 #[contractimpl]
-impl MolotovMarketplace {
+impl ArtivaMarketplace {
     /// Initializes the marketplace with `admin` as owner, the platform `fee_bps`,
     /// and the `treasury` that collects `fee − referral` on every sale.
     pub fn __constructor(e: &Env, admin: Address, fee_bps: u32, treasury: Address) {
@@ -937,7 +937,7 @@ impl MolotovMarketplace {
 }
 
 #[contractimpl(contracttrait)]
-impl Ownable for MolotovMarketplace {}
+impl Ownable for ArtivaMarketplace {}
 
 #[cfg(test)]
 mod test;

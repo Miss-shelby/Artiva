@@ -12,10 +12,10 @@ const FLOW = [
     accent: true,
   },
   {
-    amountKey: "economy.flow.molotov.amount",
-    pctKey:    "economy.flow.molotov.pct",
-    labelKey:  "economy.flow.molotov.label",
-    noteKey:   "economy.flow.molotov.note",
+    amountKey: "economy.flow.artiva.amount",
+    pctKey:    "economy.flow.artiva.pct",
+    labelKey:  "economy.flow.artiva.label",
+    noteKey:   "economy.flow.artiva.note",
     accent: false,
   },
   {
@@ -117,7 +117,7 @@ export function EconomyFlow() {
                 </dd>
               </div>
               <div className="flex items-end justify-between border-b border-black/10 pb-6">
-                <dt className="max-w-[60%] text-base text-[var(--black)]">{t("economy.molotovKeeps")}</dt>
+                <dt className="max-w-[60%] text-base text-[var(--black)]">{t("economy.artivaKeeps")}</dt>
                 <dd className="font-[family-name:var(--font-mono)] text-4xl text-[var(--blue)] md:text-5xl">
                   2.5%
                 </dd>

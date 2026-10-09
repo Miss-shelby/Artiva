@@ -30,7 +30,7 @@ coverage/
 *.tsbuildinfo
 
 # internal working docs (no publicar)
-molotov_guia_claude_code.md
+artiva_guia_claude_code.md
 doc/BUILD_PLAN.md
 
 # os / editor

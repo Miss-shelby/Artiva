@@ -48,7 +48,7 @@ AS $$
    WHERE address = p_artist;
 $$;
 
--- ── MolotovNft ────────────────────────────────────────────────────────────────
+-- ── ArtivaNft ────────────────────────────────────────────────────────────────
 
 CREATE OR REPLACE FUNCTION apply_minted_event(
   p_token_id          INTEGER,

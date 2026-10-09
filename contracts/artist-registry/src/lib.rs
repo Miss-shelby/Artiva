@@ -1,6 +1,6 @@
-//! ArtistRegistry — the minting gate for the Molotov marketplace.
+//! ArtistRegistry — the minting gate for the Artiva marketplace.
 //!
-//! An admin-curated allowlist of the artists permitted to mint on `MolotovNft`.
+//! An admin-curated allowlist of the artists permitted to mint on `ArtivaNft`.
 //! The NFT calls `is_registered(artist)` cross-contract before every mint (see
 //! `ArtistRegistryInterface` in the NFT crate); only the contract owner (the
 //! admin / curator) can `register` or `revoke`.

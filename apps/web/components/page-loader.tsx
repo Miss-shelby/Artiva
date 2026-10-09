@@ -1,15 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
+import { ArtivaLogo } from "@/components/ui/artiva-logo";
 
-/** "pending" renders nothing on server AND first client render — the
- *  sessionStorage decision must wait until after hydration, or the server
- *  (which can't know) and a returning visitor's client disagree and React
- *  regenerates the whole tree on every load. */
 type Phase = "pending" | "show" | "tear" | "fire" | "split" | "done";
 
-// Jagged tear edge — bottom of top half
 const TOP_JAGGED =
   "polygon(0% 0%, 100% 0%, 100% 88%, " +
   "96% 96%, 90% 87%, 84% 97%, 78% 87%, " +
@@ -17,7 +12,6 @@ const TOP_JAGGED =
   "47% 96%, 41% 87%, 35% 96%, 29% 87%, " +
   "23% 96%, 17% 87%, 11% 96%, 5% 87%, 0% 94%)";
 
-// Matching jagged edge — top of bottom half
 const BOT_JAGGED =
   "polygon(0% 13%, 5% 6%, 11% 13%, 17% 6%, " +
   "23% 13%, 29% 6%, 35% 13%, 41% 6%, " +
@@ -34,14 +28,13 @@ export function PageLoader() {
   useEffect(() => {
     const timers: ReturnType<typeof setTimeout>[] = [];
 
-    // Deferred (never synchronous in the effect): decide, then run the intro.
     timers.push(
       setTimeout(() => {
         let intro = false;
         try {
-          intro = !sessionStorage.getItem("mlv_intro");
+          intro = !sessionStorage.getItem("artiva_intro");
         } catch {
-          /* storage blocked — skip the intro */
+          /* storage blocked */
         }
         if (!intro) {
           setPhase("done");
@@ -49,18 +42,18 @@ export function PageLoader() {
         }
 
         setPhase("show");
-        timers.push(setTimeout(() => setPhase("tear"), 900));
-        timers.push(setTimeout(() => setPhase("fire"), 1600));
-        timers.push(setTimeout(() => setPhase("split"), 2500));
+        timers.push(setTimeout(() => setPhase("tear"), 800));
+        timers.push(setTimeout(() => setPhase("fire"), 1400));
+        timers.push(setTimeout(() => setPhase("split"), 2200));
         timers.push(
           setTimeout(() => {
             setPhase("done");
             try {
-              sessionStorage.setItem("mlv_intro", "1");
+              sessionStorage.setItem("artiva_intro", "1");
             } catch {
               /* ignore */
             }
-          }, 3800),
+          }, 3300),
         );
       }, 0),
     );
@@ -76,11 +69,10 @@ export function PageLoader() {
 
   return (
     <div
-      className="fixed inset-0 z-[200] overflow-hidden"
+      className="fixed inset-0 z-[200] overflow-hidden bg-[#07080D]"
       aria-hidden
       style={isSplit ? { animation: "loader-fade-out 0.6s ease-in 0.8s forwards" } : undefined}
     >
-      {/* Logo — centered over the full overlay */}
       <div
         className="absolute inset-0 z-10 flex items-center justify-center"
         style={{
@@ -88,20 +80,11 @@ export function PageLoader() {
           opacity: isSplit ? 0 : 1,
         }}
       >
-        <Image
-          src="/brand/logo_sinfondo.png"
-          alt=""
-          width={72}
-          height={72}
-          className="h-16 w-16 invert"
-          priority
-        />
+        <ArtivaLogo height={52} />
       </div>
 
-      {/* Blue fire — erupts through the crack */}
       {isFire && (
         <>
-          {/* Outer glow */}
           <div
             className="absolute z-20"
             style={{
@@ -111,12 +94,11 @@ export function PageLoader() {
               height: "280px",
               transform: "translate(-50%, -50%)",
               background:
-                "radial-gradient(ellipse 80% 100% at 50% 50%, rgba(21,100,255,0.85) 0%, rgba(74,138,255,0.5) 35%, transparent 70%)",
+                "radial-gradient(ellipse 80% 100% at 50% 50%, rgba(139,92,246,0.85) 0%, rgba(6,182,212,0.5) 35%, transparent 70%)",
               filter: "blur(24px)",
               animation: "fire-pulse 0.55s ease-in-out infinite",
             }}
           />
-          {/* Core bright line */}
           <div
             className="absolute z-20"
             style={{
@@ -126,7 +108,7 @@ export function PageLoader() {
               height: "60px",
               transform: "translate(-50%, -50%)",
               background:
-                "radial-gradient(ellipse 100% 100% at 50% 50%, rgba(200,220,255,0.95), rgba(21,100,255,0.7) 40%, transparent 70%)",
+                "radial-gradient(ellipse 100% 100% at 50% 50%, rgba(220,240,255,0.95), rgba(139,92,246,0.7) 40%, transparent 70%)",
               filter: "blur(6px)",
               animation: "fire-core 0.4s ease-in-out infinite",
             }}
@@ -134,9 +116,8 @@ export function PageLoader() {
         </>
       )}
 
-      {/* Top half */}
       <div
-        className="absolute inset-x-0 top-0 bg-[var(--black)]"
+        className="absolute inset-x-0 top-0 bg-[#07080D]"
         style={{
           height: "54%",
           clipPath: isJagged ? TOP_JAGGED : TOP_FLAT,
@@ -145,9 +126,8 @@ export function PageLoader() {
         }}
       />
 
-      {/* Bottom half */}
       <div
-        className="absolute inset-x-0 bottom-0 bg-[var(--black)]"
+        className="absolute inset-x-0 bottom-0 bg-[#07080D]"
         style={{
           height: "54%",
           clipPath: isJagged ? BOT_JAGGED : BOT_FLAT,

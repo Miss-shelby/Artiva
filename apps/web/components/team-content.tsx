@@ -12,7 +12,7 @@ export function TeamContent() {
       <section className="bg-[var(--offwhite)]">
         <div className="mx-auto max-w-7xl px-6 pt-10 pb-16 md:px-10 md:pt-14 md:pb-28 lg:px-20">
           <p className="font-[family-name:var(--font-mono)] text-[11px] uppercase tracking-[0.4em] text-[var(--black)]/35">
-            MOLOTOV
+            ARTIVA
           </p>
           <p className="mt-1 font-[family-name:var(--font-mono)] text-[10px] uppercase tracking-[0.25em] text-[var(--black)]/20">
             {t("about.pageDate")}

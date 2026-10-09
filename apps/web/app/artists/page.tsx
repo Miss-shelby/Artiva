@@ -14,8 +14,8 @@ import { BrowsePageStates } from "@/components/browse-page-states";
 import { ArtistCard, type ArtistCard as ArtistCardType } from "@/components/artist-card";
 
 export const metadata: Metadata = {
-  title: "Artists — Molotov",
-  description: "Discover artists publishing their work on Molotov with on-chain royalties.",
+  title: "Artists — Artiva",
+  description: "Discover artists publishing their work on Artiva with on-chain royalties.",
 };
 
 type ArtistsResult =

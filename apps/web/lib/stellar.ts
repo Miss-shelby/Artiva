@@ -61,11 +61,11 @@ export async function createWalletsKit(): Promise<StellarWalletsKit> {
     modules.push(
       new WalletConnectModule({
         projectId: WALLETCONNECT_PROJECT_ID,
-        name: "Molotov",
+        name: "Artiva",
         description: "Digital art marketplace where the royalty is enforced by the contract.",
         url:
-          typeof window === "undefined" ? "https://molotov-web.vercel.app" : window.location.origin,
-        icons: ["https://molotov-web.vercel.app/icon-512.png"],
+          typeof window === "undefined" ? "https://artiva-web.vercel.app" : window.location.origin,
+        icons: ["https://artiva-web.vercel.app/icon-512.png"],
         method: WalletConnectAllowedMethods.SIGN,
         network: STELLAR_NETWORK_PASSPHRASE as WalletNetwork,
       }),
@@ -79,10 +79,10 @@ export async function createWalletsKit(): Promise<StellarWalletsKit> {
   });
 }
 
-/** Deployed Molotov NFT contract (Stellar testnet). */
+/** Deployed Artiva NFT contract (Stellar testnet). */
 export const NFT_CONTRACT_ID = "CBS6UQE542PLU54SVUIK76EKWUJ3CNPOQ35IB4WXKF3BU6YDIBEC7XWS";
 
-/** Deployed Molotov Marketplace contract (Stellar testnet). */
+/** Deployed Artiva Marketplace contract (Stellar testnet). */
 export const MARKETPLACE_CONTRACT_ID = "CB6T6DOYV2JCD36ZE43ESXNGCL2GBDARCZNRVYQWOXGTZNJBWB72K7DU";
 
 /** Native XLM SAC on Stellar testnet — the only allowed payment currency in v1. */

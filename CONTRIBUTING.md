@@ -1,13 +1,13 @@
 # Contributing
 
-Molotov is open to outside contributors through GrantFox-listed issues. Read this
+Artiva is open to outside contributors through GitHub issues. Read this
 before opening a PR — it covers the two things that get a PR closed without reward
 no matter how good the code is.
 
 ## Never target `main` directly
 
 `main` is connected to a live production deploy. Any merge to it ships to
-`https://molotov-web.vercel.app` automatically — there is no manual approval step
+`https://artiva-web.vercel.app` automatically — there is no manual approval step
 between merge and production.
 
 - Open your PR against a feature branch, not `main`.

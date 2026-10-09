@@ -1,5 +1,5 @@
 /**
- * Event poller for the Molotov indexer.
+ * Event poller for the Artiva indexer.
  *
  * pollOnce() fetches all events since the last stored cursor, applies each
  * event to Supabase via the SECURITY DEFINER apply_* functions, and advances

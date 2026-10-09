@@ -1,6 +1,6 @@
 # Analytics — PostHog (self-hosted)
 
-Molotov measures the purchase funnel with a **self-hosted PostHog** instance.
+Artiva measures the purchase funnel with a **self-hosted PostHog** instance.
 Self-hosted is a decision, not a default: events describe wallet behavior on a
 marketplace, and that data does not leave our infrastructure. There is no
 third-party cloud fallback in the code.

@@ -4,7 +4,7 @@ import { useCallback, useState } from "react";
 import {
   Client as MarketClient,
   networks as marketNetworks,
-} from "@molotov/stellar-client/molotov-marketplace";
+} from "@artiva/stellar-client/artiva-marketplace";
 import { useWallet } from "@/hooks/use-wallet";
 import { RPC_URL, isUserRejection } from "@/lib/stellar";
 import { contractErrorKey, type ContractErrorKey } from "@/lib/contract-errors";

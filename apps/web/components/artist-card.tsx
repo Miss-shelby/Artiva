@@ -1,17 +1,5 @@
 "use client";
 
-// Client component moved out of apps/web/app/artists/page.tsx.
-//
-// Why: the ArtistCard markup needs useI18n() for two visible strings (the count
-// badge and the preview fallback), but artists/page.tsx is an async Server
-// Component where that hook cannot run. So the card is extracted here as a client
-// component and the page renders <ArtistCard artist={...} />.
-//
-// How: markup, classNames, and non-string logic are identical to the original.
-// Only the two string sites were swapped to t() calls (landing.trending.pieces*
-// for the badge, artists.previewUnavailable / myWork.noWorks for the fallback).
-// Both the component and its ArtistCard prop type are exported for the page import.
-
 import Image from "next/image";
 import Link from "next/link";
 import { useI18n } from "@/lib/i18n";
@@ -19,7 +7,6 @@ import { useI18n } from "@/lib/i18n";
 export type ArtistCard = {
   address: string;
   short: string;
-  /** Team-curated handle; the card shows it when it exists. */
   handle: string | null;
   tokenCount: number;
   latestTokenId: number | null;
@@ -30,9 +17,9 @@ export type ArtistCard = {
 export function ArtistCard({ artist }: { artist: ArtistCard }) {
   const { t } = useI18n();
   const card = (
-    <article className="group flex flex-col bg-[var(--carbon)] overflow-hidden transition-transform duration-300 hover:-translate-y-0.5">
+    <article className="glass-card group flex flex-col overflow-hidden rounded-2xl border border-white/10 transition-all duration-300 hover:border-violet-500/40 hover:shadow-xl hover:shadow-violet-500/10">
       {/* Artwork thumbnail */}
-      <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-[var(--blue-deep)] to-[var(--blue)]">
+      <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-violet-950/40 to-slate-900">
         {artist.latestImage ? (
           <Image
             src={artist.latestImage}
@@ -43,12 +30,12 @@ export function ArtistCard({ artist }: { artist: ArtistCard }) {
           />
         ) : (
           <div className="flex h-full items-center justify-center">
-            <span className="font-[family-name:var(--font-mono)] text-[10px] uppercase tracking-[0.3em] text-white/20">
+            <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-500">
               {artist.tokenCount > 0 ? t("artists.previewUnavailable") : t("myWork.noWorks")}
             </span>
           </div>
         )}
-        <span className="absolute top-3 right-3 rounded-soft bg-black/40 backdrop-blur-sm border border-white/15 px-2 py-0.5 font-[family-name:var(--font-mono)] text-[9px] uppercase tracking-[0.15em] text-white/60">
+        <span className="absolute top-3 right-3 rounded-full bg-black/60 backdrop-blur-md border border-white/15 px-3 py-1 font-mono text-[10px] font-semibold text-violet-300">
           {artist.tokenCount}{" "}
           {artist.tokenCount === 1
             ? t("landing.trending.piecesSingular")
@@ -57,15 +44,15 @@ export function ArtistCard({ artist }: { artist: ArtistCard }) {
       </div>
 
       {/* Caption */}
-      <div className="px-5 py-4">
-        <p className="font-[family-name:var(--font-mono)] text-[9px] uppercase tracking-[0.2em] text-[var(--smoke)] mb-1">
-          Artist
+      <div className="px-5 py-4 bg-zinc-950/40">
+        <p className="font-mono text-[10px] uppercase tracking-widest text-violet-400 mb-1">
+          Verified Artist
         </p>
-        <p className="font-[family-name:var(--font-mono)] text-sm text-[var(--offwhite)] truncate">
+        <p className="font-sans text-base font-bold text-white group-hover:text-violet-300 transition-colors truncate">
           {artist.handle ?? artist.short}
         </p>
         {artist.latestTitle && (
-          <p className="mt-1 font-[family-name:var(--font-display)] text-[var(--smoke)] text-sm truncate [font-variation-settings:'opsz'_18]">
+          <p className="mt-1 font-mono text-xs text-zinc-400 truncate">
             Latest: {artist.latestTitle}
           </p>
         )}

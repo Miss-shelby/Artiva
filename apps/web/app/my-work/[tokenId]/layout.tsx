@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Client, networks } from "@molotov/stellar-client/molotov-nft";
+import { Client, networks } from "@artiva/stellar-client/artiva-nft";
 import { ipfsToGateway } from "@/lib/ipfs";
 
 const RPC_URL = "https://soroban-testnet.stellar.org";
@@ -13,7 +13,7 @@ export async function generateMetadata({
   try {
     const { tokenId: raw } = await params;
     const tokenId = Number(raw);
-    if (!Number.isInteger(tokenId)) return { title: "Obra — Molotov" };
+    if (!Number.isInteger(tokenId)) return { title: "Artwork — Artiva" };
 
     const client = new Client({
       contractId: networks.testnet.contractId,
@@ -28,13 +28,13 @@ export async function generateMetadata({
     ).then((r) => r.json());
 
     return {
-      title: `${meta.name ?? "Obra"} — Molotov`,
+      title: `${meta.name ?? "Artwork"} — Artiva`,
       openGraph: meta.image
         ? { images: [{ url: ipfsToGateway(meta.image) }] }
         : undefined,
     };
   } catch {
-    return { title: "Obra — Molotov" };
+    return { title: "Artwork — Artiva" };
   }
 }
 

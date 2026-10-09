@@ -17,7 +17,7 @@
  *   9  MathOverflow             19 PriceBelowMinimum
  *  10  ListingNotFound          20 InvalidEndsAt
  *
- * MolotovError (contracts/nft/src/lib.rs):
+ * ArtivaError (contracts/nft/src/lib.rs):
  *   1  RoyaltyTooLow            7  RoyaltiesImmutableAfterMint
  *   2  RoyaltyTooHigh           8  RoyaltyConfigMissing
  *   3  ShareNotPositive         9  MathOverflow
@@ -49,7 +49,7 @@ const MARKET_ERROR_KEYS: Record<number, string> = {
 };
 
 /**
- * MolotovError discriminants → i18n key suffix.
+ * ArtivaError discriminants → i18n key suffix.
  */
 const NFT_ERROR_KEYS: Record<number, string> = {
   6: "artistNotRegistered", // ArtistNotRegistered

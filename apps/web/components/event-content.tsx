@@ -11,10 +11,10 @@ const QR_CARDS = [
     altKey: "event.qrWalletAlt",
   },
   {
-    src: "/event/qr-molotov.png",
-    labelKey: "event.qrMolotovLabel",
-    captionKey: "event.qrMolotovCaption",
-    altKey: "event.qrMolotovAlt",
+    src: "/event/qr-artiva.png",
+    labelKey: "event.qrArtivaLabel",
+    captionKey: "event.qrArtivaCaption",
+    altKey: "event.qrArtivaAlt",
   },
 ] as const;
 
@@ -25,7 +25,7 @@ const STEP_KEYS = [
 ] as const;
 
 /**
- * Static, printable-at-an-event page: two QR codes (wallet + Molotov) and a
+ * Static, printable-at-an-event page: two QR codes (wallet + Artiva) and a
  * three-step guide. No wallet connection, no runtime QR generation — just
  * something a newcomer can scan from their phone with nobody around to ask.
  */

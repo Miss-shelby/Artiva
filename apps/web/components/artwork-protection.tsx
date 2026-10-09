@@ -9,7 +9,7 @@ import { useEffect } from "react";
  *
  * Honest scope: this stops the casual grab, nothing more. Screenshots are
  * taken by the operating system and cannot be blocked by any web page, and
- * the underlying files live on IPFS, which is public by design. Molotov's
+ * the underlying files live on IPFS, which is public by design. Artiva's
  * real protection is the contract — ownership and the royalty — not hidden
  * pixels.
  */

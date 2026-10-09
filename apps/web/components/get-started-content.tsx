@@ -17,7 +17,7 @@ const FAQ_KEYS = [
 /**
  * The onboarding landing "Empezar" points to: one promise, one button that
  * opens the sign-in (email / Google, no wallet created), four questions.
- * The background is only Molotov's blue flames over black.
+ * The background is only Artiva's blue flames over black.
  */
 export function GetStartedContent() {
   const { t } = useI18n();

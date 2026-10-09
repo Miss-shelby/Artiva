@@ -1,5 +1,5 @@
 /**
- * XDR → native JS decoder for each Molotov contract event.
+ * XDR → native JS decoder for each Artiva contract event.
  *
  * Encoding in soroban-sdk 25.3 with #[contractevent]:
  *   topics[0]   = Symbol  (struct name in snake_case, e.g. MintedEvent → "minted_event")
@@ -120,7 +120,7 @@ export function decodeEvent(event: rpc.Api.EventResponse): DecodedEvent {
     case 'artist_revoked':
       return { kind: 'ArtistRevoked', artist: addr(t[1]) }
 
-    // ── MolotovNft ────────────────────────────────────────────────────────────
+    // ── ArtivaNft ────────────────────────────────────────────────────────────
     case 'minted_event': {
       const d = nat(event.value) as {
         artist: string

@@ -97,7 +97,7 @@ export function CreateMenu() {
   );
 }
 
-/* ── Brand SVGs — Molotov blues on carbon, one motif per card ─────────────── */
+/* ── Brand SVGs — Artiva blues on carbon, one motif per card ─────────────── */
 
 /** A single work: the frame, and the flame it carries. */
 function WorkArt() {

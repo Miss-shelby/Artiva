@@ -38,7 +38,7 @@ Emitted by `revoke()`.
 
 ---
 
-### 1.2 MolotovNft (`contracts/nft/src/lib.rs`)
+### 1.2 ArtivaNft (`contracts/nft/src/lib.rs`)
 
 #### `MintedEvent`
 

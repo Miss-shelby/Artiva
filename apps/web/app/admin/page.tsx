@@ -176,7 +176,7 @@ export default function AdminPage() {
         {/* Section 2 — Registered artists */}
         <Section
           title="Registered artists"
-          help="Lista de wallets que pueden mintear en Molotov. Solo artistas en esta lista pueden crear obras. El indexer la actualiza cada minuto desde la blockchain."
+          help="Lista de wallets que pueden mintear en Artiva. Solo artistas en esta lista pueden crear obras. El indexer la actualiza cada minuto desde la blockchain."
         >
           {artistsLoading ? (
             <p className="font-[family-name:var(--font-mono)] text-[11px] text-white/40">

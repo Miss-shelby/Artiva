@@ -7,10 +7,6 @@ import { useSignedIn } from "@/hooks/use-signed-in";
 import { START_HREF } from "@/lib/routes";
 import type { LandingStats } from "@/lib/db/landing";
 
-/**
- * The promise, said plainly, in many tongues. One line at a time — Spanish
- * first because the house speaks Rioplatense.
- */
 const HEADLINES = [
   "El arte le paga a quien lo hace.",
   "Art pays the one who makes it.",
@@ -50,7 +46,7 @@ function CountUp({ value }: { value: number }) {
 
   return (
     <span ref={ref} className="tabular-nums">
-      {shown.toLocaleString("es-AR")}
+      {shown.toLocaleString("en-US")}
     </span>
   );
 }
@@ -70,48 +66,44 @@ export function StatsTagline({ stats }: { stats: LandingStats }) {
     { value: stats.artists, label: t("landing.counters.artists") },
     { value: stats.collected, label: t("landing.counters.collected") },
   ];
-  // An empty catalog rendering "0 obras / 0 artistas" undercuts the trust
-  // this page is trying to build — skip the row entirely rather than show it.
   const showCounters = stats.works > 0;
 
   return (
-    <section className="bg-[var(--offwhite)] px-6 py-16 text-center md:py-24">
-      {/* Real numbers, small and true */}
-      {showCounters && (
-        <div className="mx-auto flex max-w-3xl flex-col items-center gap-4 sm:flex-row sm:items-start sm:justify-center sm:gap-10 md:gap-20">
-          {counters.map((c) => (
-            <div key={c.label} className="flex flex-col gap-1">
-              <span className="font-[family-name:var(--font-display)] text-3xl font-bold text-[var(--black)] md:text-4xl">
-                <CountUp value={c.value} />
-              </span>
-              <span className="font-[family-name:var(--font-mono)] text-[10px] uppercase tracking-[0.2em] text-[var(--black)]/45">
-                {c.label}
-              </span>
-            </div>
-          ))}
-        </div>
-      )}
+    <section className="border-y border-white/[0.08] bg-[#090A10] px-6 py-16 text-center md:py-24">
+      <div className="mx-auto max-w-6xl">
+        {showCounters && (
+          <div className="mx-auto flex max-w-3xl flex-col items-center gap-6 sm:flex-row sm:items-start sm:justify-center sm:gap-12 md:gap-24">
+            {counters.map((c) => (
+              <div key={c.label} className="glass-card flex flex-col gap-1.5 px-8 py-5 rounded-2xl">
+                <span className="font-sans text-3xl font-extrabold text-white md:text-4xl gradient-accent-text">
+                  <CountUp value={c.value} />
+                </span>
+                <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-400">
+                  {c.label}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
 
-      {/* Rotating headline */}
-      <h2
-        key={headline}
-        className="tagline-fade mx-auto mt-14 font-[family-name:var(--font-display)] text-[clamp(1.9rem,5vw,3.4rem)] font-bold leading-tight text-[var(--black)]"
-      >
-        {HEADLINES[headline]}
-      </h2>
+        <h2
+          key={headline}
+          className="tagline-fade mx-auto mt-10 font-sans text-[clamp(2rem,5vw,3.5rem)] font-extrabold leading-tight text-white tracking-tight"
+        >
+          {HEADLINES[headline]}
+        </h2>
 
-      <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-[var(--black)]/70">
-        {t("landing.tagline.description")}
-      </p>
+        <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-zinc-400">
+          {t("landing.tagline.description")}
+        </p>
 
-      {/* Signed out: same destination as the nav's Empezar (one constant).
-          Signed in: onboarding no longer applies — the invitation is the art. */}
-      <Link
-        href={isSignedIn ? "/works" : START_HREF}
-        className="mt-8 inline-flex h-11 items-center bg-[var(--black)] px-8 font-[family-name:var(--font-mono)] text-[10px] uppercase tracking-[0.2em] text-[var(--offwhite)] transition-colors hover:bg-[var(--blue)]"
-      >
-        {isSignedIn ? t("landing.tagline.ctaConnected") : t("landing.tagline.cta")}
-      </Link>
+        <Link
+          href={isSignedIn ? "/works" : START_HREF}
+          className="mt-8 inline-flex h-12 items-center justify-center rounded-xl bg-white px-8 font-mono text-xs uppercase tracking-widest text-black transition-all hover:bg-violet-400 hover:text-black font-bold shadow-lg shadow-white/10"
+        >
+          {isSignedIn ? t("landing.tagline.ctaConnected") : t("landing.tagline.cta")}
+        </Link>
+      </div>
     </section>
   );
 }

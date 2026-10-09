@@ -1,7 +1,7 @@
-// Molotov service worker — minimal and conservative.
+// Artiva service worker — minimal and conservative.
 // Cache-first for static assets, network-first for navigations. Never caches
 // /api/* or cross-origin requests. Registered only in production.
-const CACHE = "molotov-v1";
+const CACHE = "artiva-v1";
 const ASSET_RE = /\.(?:js|css|woff2?|png|jpe?g|svg|ico|webp|gif|json)$/;
 
 self.addEventListener("install", () => {

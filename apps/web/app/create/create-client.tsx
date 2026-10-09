@@ -22,7 +22,7 @@ export function CreateClient() {
               {t("create.connectPrompt")}
             </p>
             {/* The "why" before the ask: an artist arriving here may have no
-                idea Molotov even involves a wallet at all. */}
+                idea Artiva even involves a wallet at all. */}
             <p className="mt-4 max-w-md text-sm leading-relaxed text-[var(--offwhite)]/60">
               {t("create.connectExplain")}
             </p>

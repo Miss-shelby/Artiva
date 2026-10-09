@@ -1,6 +1,6 @@
 name: indexer-cron
 
-# Scheduled trigger for the Molotov indexer. This is the ACTIVE scheduler while the
+# Scheduled trigger for the Artiva indexer. This is the ACTIVE scheduler while the
 # Vercel project is on the Hobby plan. Do NOT add a sub-daily `crons` entry to
 # apps/web/vercel.json while on Hobby: Vercel rejects it and FAILS THE WHOLE DEPLOY
 # ("Hobby accounts are limited to daily cron jobs") — it is a hard deploy blocker, not

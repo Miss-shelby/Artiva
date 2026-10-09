@@ -70,7 +70,7 @@ describe('decodeEvent — real XDR fixture from testnet', () => {
     expect(ev!.artist).toBe(ADMIN)
   })
 
-  // ── MolotovNft ─────────────────────────────────────────────────────────────
+  // ── ArtivaNft ─────────────────────────────────────────────────────────────
 
   it('MintedEvent token_id=4: royaltyBps=1000, recipientsCount=1, artist/recipient=ADMIN', () => {
     const ev = findAll('MintedEvent').find(d => d.tokenId === 4)

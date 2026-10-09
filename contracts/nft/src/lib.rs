@@ -1,4 +1,4 @@
-//! MolotovNFT — production NFT contract for the Molotov marketplace.
+//! ArtivaNFT — production NFT contract for the Artiva marketplace.
 //!
 //! Three product differentiators, baked into the contract:
 //!   1. **Immutable** royalties: the royalty config is fixed at mint and can
@@ -45,7 +45,7 @@ const TTL_BUMP_AMOUNT: u32 = 518_400; // ~30 days in ledgers
 #[contracterror]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
 #[repr(u32)]
-pub enum MolotovError {
+pub enum ArtivaError {
     RoyaltyTooLow = 1,
     RoyaltyTooHigh = 2,
     ShareNotPositive = 3,
@@ -105,10 +105,10 @@ pub trait ArtistRegistryInterface {
 }
 
 #[contract]
-pub struct MolotovNft;
+pub struct ArtivaNft;
 
 #[contractimpl]
-impl MolotovNft {
+impl ArtivaNft {
     /// Initializes the collection.
     ///
     /// `admin` is the owner ONLY for upgrades / treasury changes, never to touch
@@ -141,28 +141,28 @@ impl MolotovNft {
         Self::require_registered_artist(e, &artist);
 
         if royalty_bps < MIN_ROYALTY_BPS {
-            panic_with_error!(e, MolotovError::RoyaltyTooLow);
+            panic_with_error!(e, ArtivaError::RoyaltyTooLow);
         }
         if royalty_bps > MAX_ROYALTY_BPS {
-            panic_with_error!(e, MolotovError::RoyaltyTooHigh);
+            panic_with_error!(e, ArtivaError::RoyaltyTooHigh);
         }
         if recipients.is_empty() {
-            panic_with_error!(e, MolotovError::NoRecipients);
+            panic_with_error!(e, ArtivaError::NoRecipients);
         }
         if recipients.len() > MAX_RECIPIENTS {
-            panic_with_error!(e, MolotovError::TooManyRecipients);
+            panic_with_error!(e, ArtivaError::TooManyRecipients);
         }
         let mut sum: u32 = 0;
         for r in recipients.iter() {
             if r.share_bps == 0 {
-                panic_with_error!(e, MolotovError::ShareNotPositive);
+                panic_with_error!(e, ArtivaError::ShareNotPositive);
             }
             sum = sum
                 .checked_add(r.share_bps)
-                .unwrap_or_else(|| panic_with_error!(e, MolotovError::MathOverflow));
+                .unwrap_or_else(|| panic_with_error!(e, ArtivaError::MathOverflow));
         }
         if sum != BPS_DENOMINATOR as u32 {
-            panic_with_error!(e, MolotovError::SharesMustSumTo10000);
+            panic_with_error!(e, ArtivaError::SharesMustSumTo10000);
         }
 
         let token_id = Base::sequential_mint(e, &recipient);
@@ -225,7 +225,7 @@ impl MolotovNft {
     /// so that the sum of amounts == total.
     pub fn get_royalty_info(e: &Env, token_id: u32, sale_price: i128) -> Vec<(Address, i128)> {
         if sale_price < 0 {
-            panic_with_error!(e, MolotovError::NegativeSalePrice);
+            panic_with_error!(e, ArtivaError::NegativeSalePrice);
         }
         let config = Self::royalty_config(e, token_id);
         // Keep the royalty entry alive on access: when the marketplace reads it,
@@ -246,12 +246,12 @@ impl MolotovNft {
                 // last: the remainder, so the sum closes exactly against `total`.
                 total_amount
                     .checked_sub(distributed)
-                    .unwrap_or_else(|| panic_with_error!(e, MolotovError::MathOverflow))
+                    .unwrap_or_else(|| panic_with_error!(e, ArtivaError::MathOverflow))
             } else {
                 let a = mul_div(e, total_amount, r.share_bps as i128, BPS_DENOMINATOR);
                 distributed = distributed
                     .checked_add(a)
-                    .unwrap_or_else(|| panic_with_error!(e, MolotovError::MathOverflow));
+                    .unwrap_or_else(|| panic_with_error!(e, ArtivaError::MathOverflow));
                 a
             };
             out.push_back((r.address, amount));
@@ -318,7 +318,7 @@ impl MolotovNft {
     // Stubs in case someone tries the standard ERC2981 path; they always panic.
 
     pub fn set_default_royalty(e: &Env, _receiver: Address, _basis_points: u32) {
-        panic_with_error!(e, MolotovError::RoyaltiesImmutableAfterMint);
+        panic_with_error!(e, ArtivaError::RoyaltiesImmutableAfterMint);
     }
 
     pub fn set_token_royalty(
@@ -327,7 +327,7 @@ impl MolotovNft {
         _receiver: Address,
         _basis_points: u32,
     ) {
-        panic_with_error!(e, MolotovError::RoyaltiesImmutableAfterMint);
+        panic_with_error!(e, ArtivaError::RoyaltiesImmutableAfterMint);
     }
 
     // --- internals ---
@@ -336,7 +336,7 @@ impl MolotovNft {
         e.storage()
             .persistent()
             .get(&DataKey::Royalty(token_id))
-            .unwrap_or_else(|| panic_with_error!(e, MolotovError::RoyaltyConfigMissing))
+            .unwrap_or_else(|| panic_with_error!(e, ArtivaError::RoyaltyConfigMissing))
     }
 
     fn require_registered_artist(e: &Env, artist: &Address) {
@@ -346,13 +346,13 @@ impl MolotovNft {
             return; // gate disabled until Step 7
         }
         if !ArtistRegistryClient::new(e, &registry).is_registered(artist) {
-            panic_with_error!(e, MolotovError::ArtistNotRegistered);
+            panic_with_error!(e, ArtivaError::ArtistNotRegistered);
         }
     }
 }
 
 #[contractimpl(contracttrait)]
-impl NonFungibleToken for MolotovNft {
+impl NonFungibleToken for ArtivaNft {
     type ContractType = Base;
 
     /// Override: returns the per-token IPFS URI stored at mint (not base_uri + id).
@@ -378,7 +378,7 @@ impl NonFungibleToken for MolotovNft {
 }
 
 #[contractimpl(contracttrait)]
-impl NonFungibleBurnable for MolotovNft {
+impl NonFungibleBurnable for ArtivaNft {
     /// Burn + clean up. The base burn removes ownership; we additionally drop the
     /// per-token royalty, URI, and minter entries so a burned token leaves no
     /// orphaned persistent rent behind.
@@ -402,14 +402,14 @@ fn remove_token_metadata(e: &Env, token_id: u32) {
 }
 
 #[contractimpl(contracttrait)]
-impl Ownable for MolotovNft {}
+impl Ownable for ArtivaNft {}
 
 /// `a * b / denom` with checked mul/div; panics on overflow.
 fn mul_div(e: &Env, a: i128, b: i128, denom: i128) -> i128 {
     a.checked_mul(b)
-        .unwrap_or_else(|| panic_with_error!(e, MolotovError::MathOverflow))
+        .unwrap_or_else(|| panic_with_error!(e, ArtivaError::MathOverflow))
         .checked_div(denom)
-        .unwrap_or_else(|| panic_with_error!(e, MolotovError::MathOverflow))
+        .unwrap_or_else(|| panic_with_error!(e, ArtivaError::MathOverflow))
 }
 
 #[cfg(test)]

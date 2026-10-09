@@ -6,7 +6,7 @@ import { IS_TESTNET } from "@/lib/stellar";
 
 const appId = process.env.NEXT_PUBLIC_PRIVY_APP_ID ?? "";
 
-export function MolotovPrivyProvider({ children }: { children: ReactNode }) {
+export function ArtivaPrivyProvider({ children }: { children: ReactNode }) {
   if (!appId || !IS_TESTNET) return <>{children}</>;
 
   return (
@@ -16,7 +16,7 @@ export function MolotovPrivyProvider({ children }: { children: ReactNode }) {
         loginMethods: ["email", "google"],
         appearance: { theme: "dark", accentColor: "#2D43FF" },
         embeddedWallets: { createOnLogin: "off" },
-        // Molotov never uses Privy for EVM wallet connections — Stellar wallets
+        // Artiva never uses Privy for EVM wallet connections — Stellar wallets
         // go through Stellar Wallets Kit (see providers/wallet-provider.tsx).
         // Without this, Privy still scans window.ethereum for injected EVM
         // wallets on every load and crashes if a browser has one that doesn't

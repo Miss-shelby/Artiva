@@ -3,13 +3,13 @@ import type { es } from "./es";
 export const en = {
   meta: {
     lang: "en",
-    title: "Molotov",
+    title: "Artiva",
     description:
       "Digital art marketplace where artists earn royalties automatically every time their work is resold.",
     manifest: "/manifest-en.json",
   },
   nav: {
-    homeLabel: "Molotov, home",
+    homeLabel: "Artiva, home",
     discover: "Discover",
     create: "Create",
     myWork: "My works",
@@ -97,10 +97,10 @@ export const en = {
         label: "to the artist",
         note: "Yours on the first sale and on every resale after.",
       },
-      molotov: {
+      Artiva: {
         amount: "2.50",
         pct: "2.5% fee",
-        label: "to Molotov",
+        label: "to Artiva",
         note: "The only cut the platform takes.",
       },
       seller: {
@@ -113,8 +113,8 @@ export const en = {
     comparison:
       "With galleries or streaming, you sell once and that's it. Here, every resale puts money back in your pocket.",
     streamingKeeps: "Kept by a streaming platform",
-    molotovKeeps: "Kept by Molotov",
-    note: "Your royalty comes from the buyer, not from Molotov's cut. You set it when you upload and nobody can change it — not even us.",
+    ArtivaKeeps: "Kept by Artiva",
+    note: "Your royalty comes from the buyer, not from Artiva's cut. You set it when you upload and nobody can change it — not even us.",
   },
   activity: {
     sold: "sold",
@@ -129,13 +129,13 @@ export const en = {
   manifesto: {
     title: "Manifesto",
     placeDate: "Buenos Aires, 2026",
-    p1Before: "We did not build Molotov for speculation. We built it so an artist can",
+    p1Before: "We did not build Artiva for speculation. We built it so an artist can",
     p1Em: "live from their work",
     p1After: ".",
     p2: "For centuries, artists sold once and watched their work gain value in someone else's hands. Royalties existed on paper and almost never in practice.",
     p3: "Here, the royalty is not a clause someone promises to honor: it is code. It is written into the contract when you mint, and no one, not even us, can change it. On every resale, the artist is paid before the transaction closes.",
     p4: "We do not sell speculation. We sell art, and we defend the people who make it.",
-    signature: "— Molotov, May 2026",
+    signature: "— Artiva, May 2026",
   },
   finalCta: {
     title: "Upload your first work this week.",
@@ -147,7 +147,7 @@ export const en = {
     propertiesLabel: "Properties",
     mintWork: "Upload work",
     artists: "Artists",
-    copyright: "© 2026 Molotov · Beta on Stellar testnet",
+    copyright: "© 2026 Artiva · Beta on Stellar testnet",
     contractPrefix: "Contract",
     props: {
       royalties: "1–15% royalties, fixed forever",
@@ -159,14 +159,14 @@ export const en = {
     },
   },
   about: {
-    pageLabel: "About Molotov",
+    pageLabel: "About Artiva",
     pageDate: "Buenos Aires, 2026",
     whatWeAreLabel: "What we are",
     whatWeAre:
       "A marketplace where Latin American artists sell their work and earn royalties every time it's resold — automatically, written in code, owned by no one.",
     whatWeDoLabel: "What we do",
     whatWeDo1:
-      "We built Molotov on the Stellar blockchain so the royalty isn't a platform promise — it's a contract. When you upload your work, the percentage is written in and locked. Nobody can change it. Not even us.",
+      "We built Artiva on the Stellar blockchain so the royalty isn't a platform promise — it's a contract. When you upload your work, the percentage is written in and locked. Nobody can change it. Not even us.",
     whatWeDo2:
       "We give artists the tools to list, sell, and earn: a marketplace to reach collectors, a contract that executes the royalty on every resale, and a fee of only 2.5% — so the work keeps paying the people who made it.",
     whatWeBelieveLabel: "What we believe",
@@ -177,7 +177,7 @@ export const en = {
     whatWeBelieve3: "The best platform is the one you forget is there.",
     teamLabel: "The creators",
     teamBody:
-      "Molotov was built by two Argentine designers who got tired of watching artists get paid once and forgotten.",
+      "Artiva was built by two Argentine designers who got tired of watching artists get paid once and forgotten.",
     janiaName: "Jania Müller",
     janiaRole: "Co-founder · Design & Product",
     elisaName: "María Elisa Araya",
@@ -188,7 +188,7 @@ export const en = {
   create: {
     connectPrompt: "To upload your first work, connect your wallet.",
     connectExplain:
-      "Your work exists as a digital file. What lives on Stellar is its certificate: a public record of who created it and who holds it today, one that can never be rewritten afterward. That certificate carries your wallet's signature, and it's where your royalty lands automatically, every time it's resold within Molotov.",
+      "Your work exists as a digital file. What lives on Stellar is its certificate: a public record of who created it and who holds it today, one that can never be rewritten afterward. That certificate carries your wallet's signature, and it's where your royalty lands automatically, every time it's resold within Artiva.",
   },
   mint: {
     progress: {
@@ -231,7 +231,7 @@ export const en = {
       walletFallback: "—",
       walletReceives: "your wallet (100%)",
       receiverExplain:
-        "This is the wallet you have connected right now — not your Google account, not anything Molotov holds. Once you upload the work, it can't be changed.",
+        "This is the wallet you have connected right now — not your Google account, not anything Artiva holds. Once you upload the work, it can't be changed.",
       submit: "Upload work",
       estimatedFee: "Estimated network fee",
       summaryTitle: "Before you confirm",
@@ -389,39 +389,39 @@ export const en = {
     close: "Close",
   },
   getStarted: {
-    title: "Get started with Molotov",
+    title: "Get started with Artiva",
     cta: "Sign up free",
     ctaConnected: "You're in. Browse the works",
     faq: {
-      q1: "What is Molotov?",
-      a1: "A digital art market on Stellar. Every work carries its royalty written into the contract at upload time: between 1% and 15%, set by its creator, and nobody — not even us — can change it. On every sale on Molotov, the royalty is paid before the deal closes.",
+      q1: "What is Artiva?",
+      a1: "A digital art market on Stellar. Every work carries its royalty written into the contract at upload time: between 1% and 15%, set by its creator, and nobody — not even us — can change it. On every sale on Artiva, the royalty is paid before the deal closes.",
       q2: "What is a wallet?",
       a2: "Your key and your signature. To mint or buy you need a wallet you control (Freighter, xBull, LOBSTR and more). If you're collecting, you can sign in with email and browse without a wallet.",
       q3: "How do I collect art?",
       a3: "Come in, browse the works and buy the one that moves you. The payment travels directly: to the seller and to the creator, royalty included. We are on testnet today: you can try the whole loop without real money.",
       q4: "How do I upload my work?",
-      a4: "The artist registry is curated. Once in, you upload your image, set your royalty forever and publish your price. Every time your work sells on Molotov, you get paid. Always.",
+      a4: "The artist registry is curated. Once in, you upload your image, set your royalty forever and publish your price. Every time your work sells on Artiva, you get paid. Always.",
     },
   },
   event: {
     pageLabel: "Quick guide",
-    title: "You're at an event with Molotov",
+    title: "You're at an event with Artiva",
     intro: "No wallet, no extra install: just follow these three steps from your phone.",
     qrWalletLabel: "1. Get a wallet",
     qrWalletCaption: "Scan to install Decaf. No seed phrase, sign in with your account.",
     qrWalletAlt: "QR code to install the Decaf wallet",
-    qrMolotovLabel: "2. Open Molotov",
-    qrMolotovCaption: "Scan to open Molotov in your phone's browser.",
-    qrMolotovAlt: "QR code to open Molotov",
+    qrArtivaLabel: "2. Open Artiva",
+    qrArtivaCaption: "Scan to open Artiva in your phone's browser.",
+    qrArtivaAlt: "QR code to open Artiva",
     steps: {
       step1Title: "Get a wallet",
       step1Body:
         "Install Decaf with your Google or Apple account. No seed phrase to write down or lose.",
-      step2Title: "Open Molotov",
+      step2Title: "Open Artiva",
       step2Body: "Come in from your phone's browser, nothing else to download.",
       step3Title: "Connect",
       step3Body:
-        "Tap connect wallet on Molotov and pick the one you just installed. You're set to browse and collect.",
+        "Tap connect wallet on Artiva and pick the one you just installed. You're set to browse and collect.",
     },
   },
   landing: {
@@ -432,7 +432,7 @@ export const en = {
     },
     tagline: {
       description:
-        "A digital art market on Stellar where artists and collectors meet. Here the royalty is not a promise: it is written into each work's contract and paid on every sale on Molotov.",
+        "A digital art market on Stellar where artists and collectors meet. Here the royalty is not a promise: it is written into each work's contract and paid on every sale on Artiva.",
       cta: "Get started",
       ctaConnected: "Browse works",
     },
@@ -497,7 +497,7 @@ export const en = {
       "Activity syncs with the chain every few hours. A recent action may take a while to appear.",
     royaltyBadge: "royalty",
     shareTitle: "Share this profile",
-    registered: "Registered artist on Molotov",
+    registered: "Registered artist on Artiva",
     notFound: "We couldn't find that profile.",
     backToArtists: "Browse artists",
   },
@@ -524,7 +524,7 @@ export const en = {
     cta: "Share",
     copied: "Link copied",
     hintConnected:
-      "Your link carries your name: if someone buys through it, part of the fee is yours. It comes out of Molotov's cut, not the price of the work.",
+      "Your link carries your name: if someone buys through it, part of the fee is yours. It comes out of Artiva's cut, not the price of the work.",
     hintDisconnected:
       "Connect your wallet before sharing and the link carries your name: if someone buys through it, part of the fee is yours.",
   },
@@ -582,3 +582,4 @@ export const en = {
       "Every sale and every royalty will show up here as soon as they happen. Nothing to do on your side: the indexer picks them up from the chain.",
   },
 } satisfies typeof es;
+

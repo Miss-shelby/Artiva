@@ -4,13 +4,17 @@ export type AppError =
   | { kind: "submit_failed"; message: string }
   | { kind: "not_configured"; missing: string };
 
-export class MolotovError extends Error {
+export class ArtivaError extends Error {
   constructor(public readonly appError: AppError) {
     super(appError.kind);
-    this.name = "MolotovError";
+    this.name = "ArtivaError";
   }
 }
 
-export function isMolotovError(err: unknown): err is MolotovError {
-  return err instanceof MolotovError;
+export function isArtivaError(err: unknown): err is ArtivaError {
+  return err instanceof ArtivaError;
 }
+
+export const ArtivaError = ArtivaError;
+export type ArtivaError = ArtivaError;
+export const isArtivaError = isArtivaError;

@@ -1,11 +1,11 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import { networks as nftNetworks } from "@molotov/stellar-client/molotov-nft";
+import { networks as nftNetworks } from "@artiva/stellar-client/artiva-nft";
 import {
   Client as MarketClient,
   networks as marketNetworks,
-} from "@molotov/stellar-client/molotov-marketplace";
+} from "@artiva/stellar-client/artiva-marketplace";
 import { useWallet } from "@/hooks/use-wallet";
 import { NATIVE_XLM_SAC, RPC_URL, isUserRejection } from "@/lib/stellar";
 import { xlmToStroops } from "@/lib/stroops";

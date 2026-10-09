@@ -1,5 +1,5 @@
 /**
- * Test helpers for the Molotov indexer DB test suite.
+ * Test helpers for the Artiva indexer DB test suite.
  *
  * Prerequisites: `supabase start` is running and migrations have been applied
  * via `supabase db push` (or `supabase db reset`).

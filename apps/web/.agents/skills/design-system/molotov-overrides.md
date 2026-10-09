@@ -1,4 +1,4 @@
-# Molotov · Overrides del sistema de diseño
+# Artiva · Overrides del sistema de diseño
 
 > **Precedencia:** este documento manda sobre `SKILL.md` (la guía de diseño base).
 > Donde haya conflicto entre la guía base y estos overrides, gana este archivo.
@@ -12,7 +12,7 @@
 
 ## 1. Contexto y objetivos
 
-Molotov es un marketplace de arte digital con estética **editorial / galería,
+Artiva es un marketplace de arte digital con estética **editorial / galería,
 anti-cripto-bro**. La guía de diseño base aporta la estructura
 (grids, jerarquía, ritmo de espaciado), pero su paleta es **clara** y sus fuentes
 son otras. Estos overrides reorientan el sistema a una **base oscura** con
@@ -35,7 +35,7 @@ Cambios respecto de la base que hay que tener presentes:
 > esos nombres ni esos valores. Reescrita para reflejar los tokens reales de
 > `:root` en `globals.css` — la cadena manda.
 
-Base oscura. Negro casi puro como fondo, off-white como texto. Azul Molotov
+Base oscura. Negro casi puro como fondo, off-white como texto. Azul Artiva
 como acento puntual, **nunca inundatorio**.
 
 ```
@@ -47,7 +47,7 @@ como acento puntual, **nunca inundatorio**.
 --ash:        #A8A8A8;  /* texto secundario, un tono más claro que smoke */
 --offwhite:   #F5F4ED;  /* texto primario */
 
-/* Acento Molotov */
+/* Acento Artiva */
 --blue:       #1564FF;  /* fills, bordes, focus, dots, underlines */
 --blue-deep:  #0D3FA8;  /* extremo oscuro de gradientes placeholder (cards) */
 --blue-light: #4A8AFF;  /* estado hover del acento */
@@ -219,7 +219,7 @@ moon`, `WAGMI`, `GM`, `ape in` (y equivalentes).
 - Acento azul inundando bloques grandes o fondos.
 - Redondear cards, imágenes o cualquier contenedor de layout — `rounded-soft`
   es solo para chrome interactivo puntual (ver §4). Todo redondeado convierte
-  a Molotov en un SaaS genérico, que es exactamente lo que la base oscura +
+  a Artiva en un SaaS genérico, que es exactamente lo que la base oscura +
   bordes duros evita.
 - Fraunces fuera de un momento editorial (manifiesto, el acento del hero) —
   usarlo en nav, botones, CTAs o labels lo convierte en un segundo sistema de

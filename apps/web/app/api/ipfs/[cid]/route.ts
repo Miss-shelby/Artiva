@@ -7,7 +7,7 @@ const CID_RE = /^(Qm[1-9A-HJ-NP-Za-km-z]{44}|b[a-z2-7]{20,110})$/;
 
 // A minter-supplied SVG served from our own origin with an executable
 // content-type is a stored-XSS vector. Force download + a locked-down CSP so a
-// direct navigation can never run script in the Molotov origin. Subresource
+// direct navigation can never run script in the Artiva origin. Subresource
 // <img>/<Image> loads ignore these headers, so artwork still renders — the
 // gateway's Content-Type is preserved untouched.
 const HARDENED_HEADERS = {

@@ -33,6 +33,6 @@ ALTER TABLE artists
     OR handle NOT IN (
       'about', 'admin', 'api', 'artist', 'artists', 'create', 'earnings',
       'my-work', 'team', 'token', 'works',
-      'molotov', 'root', 'soporte', 'support', 'wallet', 'www'
+      'artiva', 'root', 'soporte', 'support', 'wallet', 'www'
     )
   );

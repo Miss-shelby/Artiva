@@ -11,7 +11,7 @@ export default function Loading() {
         <div className="flex items-baseline justify-between border-b border-[var(--ember)] pb-5 mb-10">
           <div>
             <p className="font-[family-name:var(--font-mono)] text-[10px] tracking-[0.3em] text-[var(--smoke)] uppercase mb-1">
-              Molotov
+              Artiva
             </p>
             <h1 className="font-[family-name:var(--font-display)] font-black text-[clamp(2rem,5vw,3.5rem)] leading-none text-[var(--offwhite)]">
               Discover

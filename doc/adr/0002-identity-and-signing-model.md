@@ -5,7 +5,7 @@
 
 ## Context
 
-Molotov has no server-side accounts: identity _is_ the Stellar address, and every write
+Artiva has no server-side accounts: identity _is_ the Stellar address, and every write
 is a client-signed transaction. Two signing paths ship today, multiplexed behind one
 interface in `WalletProvider`:
 
@@ -131,7 +131,7 @@ Ship only Stellar Wallets Kit; remove the Privy email path.
 - **Costs / gives up:** the email/social onboarding path. A newcomer with no wallet must
   install one (Freighter, xBull, etc.) before they can mint or buy — friction that cuts
   against the "saw it on social → tap → collect" flow.
-- **Clears browser storage:** safe. The key lives in the wallet extension, not in Molotov;
+- **Clears browser storage:** safe. The key lives in the wallet extension, not in Artiva;
   site storage holds only the reconnect hint `SELECTED_WALLET_KEY`
   (`apps/web/providers/wallet-provider.tsx:22,106`). Clearing it costs a reconnect, not the
   key.
@@ -242,7 +242,7 @@ Costs, stated honestly rather than sold:
 **Option D.** In three points:
 
 1. Royalty recipients are immutable, so the receiving address must be maximally portable and
-   must not depend on infrastructure Molotov operates or on an integration a third party may
+   must not depend on infrastructure Artiva operates or on an integration a third party may
    or may not have built.
 2. A G-address is a keypair that works standalone, indefinitely, with no maintained
    infrastructure behind it. A contract account is a contract that depends on a relayer and on

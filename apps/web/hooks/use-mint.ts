@@ -1,13 +1,13 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { Client, networks } from "@molotov/stellar-client/molotov-nft";
+import { Client, networks } from "@artiva/stellar-client/artiva-nft";
 import { scValToNative } from "@stellar/stellar-sdk";
 import { useWallet } from "@/hooks/use-wallet";
 import { uploadImage, uploadMetadata } from "@/lib/ipfs";
 import { RPC_URL, isUserRejection, reconcileTransaction } from "@/lib/stellar";
 import { contractErrorKey, type ContractErrorKey } from "@/lib/contract-errors";
-import { MolotovError } from "@/lib/errors";
+import { ArtivaError } from "@/lib/errors";
 import { buildTokenMetadata, type AttributeInput } from "@/lib/metadata";
 import { stroopsToXlm } from "@/lib/stroops";
 
@@ -257,7 +257,7 @@ export function useMint() {
           console.error("[mint] IPFS upload failed", err);
           setErrorKind("upload");
           setState("error");
-          throw new MolotovError({
+          throw new ArtivaError({
             kind: "upload_failed",
             message: err instanceof Error ? err.message : "IPFS upload failed",
           });
@@ -330,7 +330,7 @@ export function useMint() {
         return { tokenId: tokenIds[0], tokenIds, txHash: lastHash };
       } catch (err) {
         // Our own errors (e.g. upload) are not SDK failures — rethrow as-is.
-        if (err instanceof MolotovError) throw err;
+        if (err instanceof ArtivaError) throw err;
 
         // The dangerous case: signAndSend threw AFTER submitting. If we captured a
         // hash, reconcile the real outcome before declaring failure.
@@ -364,7 +364,7 @@ export function useMint() {
         // "transaction.errors.failed" key when it can't be identified.
         if (!rejected) setErrorMessageKey(contractErrorKey(err));
         setState("error");
-        throw new MolotovError(
+        throw new ArtivaError(
           rejected
             ? { kind: "user_rejected" }
             : {

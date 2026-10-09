@@ -1,5 +1,5 @@
 {
-  "name": "@molotov/indexer-db-tests",
+  "name": "@artiva/indexer-db-tests",
   "private": true,
   "scripts": {
     "test": "vitest run --reporter=verbose",

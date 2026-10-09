@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Syne, DM_Sans, Space_Mono, Fraunces } from "next/font/google";
 import "./globals.css";
 import { WalletProvider } from "@/providers/wallet-provider";
-import { MolotovPrivyProvider } from "@/providers/privy-provider";
+import { ArtivaPrivyProvider } from "@/providers/privy-provider";
 import { ServiceWorkerRegister } from "@/components/sw-register";
 import { AnalyticsPageview } from "@/components/analytics-pageview";
 import { ArtworkProtection } from "@/components/artwork-protection";
@@ -28,7 +28,7 @@ const spaceMono = Space_Mono({
 });
 // Second, editorial-only voice — manifesto, curatorial captions, the
 // occasional alternate headline. Never used for UI chrome: nav, buttons,
-// labels and CTAs stay Syne/DM Sans/Space Mono. See molotov-overrides.md.
+// labels and CTAs stay Syne/DM Sans/Space Mono. See artiva-overrides.md.
 const fraunces = Fraunces({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "Molotov",
+    title: "Artiva",
   },
   icons: {
     icon: [
@@ -76,9 +76,9 @@ export default function RootLayout({
         <div aria-hidden className="grain pointer-events-none fixed inset-0 z-0 opacity-[0.04]" />
         <PageLoader />
         <I18nProvider>
-          <MolotovPrivyProvider>
+          <ArtivaPrivyProvider>
             <WalletProvider>{children}</WalletProvider>
-          </MolotovPrivyProvider>
+          </ArtivaPrivyProvider>
         </I18nProvider>
         <ServiceWorkerRegister />
         <ArtworkProtection />

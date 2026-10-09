@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useParams, useSearchParams } from "next/navigation";
-import { Client, networks } from "@molotov/stellar-client/molotov-nft";
+import { Client, networks } from "@artiva/stellar-client/artiva-nft";
 import { Nav } from "@/components/nav";
 import {
   NFT_CONTRACT_ID,

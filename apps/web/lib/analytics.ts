@@ -8,7 +8,7 @@
  * no-op, so the app works identically with analytics off (local dev, forks,
  * privacy-minded deployments).
  *
- *   NEXT_PUBLIC_POSTHOG_HOST  e.g. https://posthog.molotov.example
+ *   NEXT_PUBLIC_POSTHOG_HOST  e.g. https://posthog.artiva.example
  *   NEXT_PUBLIC_POSTHOG_KEY   the project API key of that instance
  *
  * The funnel and event names are documented in doc/analytics.md. Keep the

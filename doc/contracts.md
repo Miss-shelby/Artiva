@@ -1,4 +1,4 @@
-# Contratos Molotov
+# Contratos Artiva
 
 Registro de contratos Soroban desplegados y cómo reproducir cada deploy.
 
@@ -17,18 +17,18 @@ miembro (`contracts/nft`, …).
 
 ### Cuenta de deploy (testnet)
 
-- Alias CLI: `molotov-dev`
+- Alias CLI: `artiva-dev`
 - Address: `GANXCETUVUUILGJPVEZWM7EH66IZM5OICUPMNUWNXKIBRK425MUKZERM`
 
 Regenerar / refondear:
 
 ```bash
-stellar keys generate molotov-dev --network testnet --fund
+stellar keys generate artiva-dev --network testnet --fund
 ```
 
 ---
 
-## MolotovNFT (producción — Paso 6)
+## ArtivaNFT (producción — Paso 6)
 
 Contrato NFT de producción. Reemplaza el scaffold del Paso 4. Implementa los
 tres diferenciales del producto:
@@ -55,7 +55,7 @@ para royalties.
 | WASM hash | `f67053ba9957714ff9b58bef1046c1286ae49ed30568df50d76a5ddef083ad87` |
 | Admin/Owner | `GANXCETUVUUILGJPVEZWM7EH66IZM5OICUPMNUWNXKIBRK425MUKZERM` |
 | Registry | `CC37LTUP…U533` (real ArtistRegistry → gate **ON**; was the all-zeros placeholder, wired via `set_registry` — see ArtistRegistry below) |
-| Metadata | name `Molotov` · symbol `MOLO` |
+| Metadata | name `Artiva` · symbol `MOLO` |
 
 > Redeploy de la Fase 0 (cap de recipients + `set_registry` + `upgrade`). El
 > deploy anterior `CCRGD3F…FMT4` queda obsoleto.
@@ -68,7 +68,7 @@ para royalties.
 
 Explorer: <https://stellar.expert/explorer/testnet/contract/CBS6UQE542PLU54SVUIK76EKWUJ3CNPOQ35IB4WXKF3BU6YDIBEC7XWS>
 
-Bindings TS: `packages/stellar-client/src/molotov-nft/` (sha256 `src/index.ts`:
+Bindings TS: `packages/stellar-client/src/artiva-nft/` (sha256 `src/index.ts`:
 `9fb6af4a98aeaf509af17001b967f78b4fdfca8c5aed6b37213833edb49ae902`).
 
 ### Decisiones técnicas
@@ -94,31 +94,31 @@ Desde `contracts/`:
 
 ```bash
 cargo test                 # 18 tests, todos verdes
-stellar contract build     # -> target/wasm32v1-none/release/molotov_nft.wasm
+stellar contract build     # -> target/wasm32v1-none/release/artiva_nft.wasm
 
-ADMIN=$(stellar keys address molotov-dev)
+ADMIN=$(stellar keys address artiva-dev)
 stellar contract deploy \
-  --wasm target/wasm32v1-none/release/molotov_nft.wasm \
-  --source molotov-dev --network testnet \
+  --wasm target/wasm32v1-none/release/artiva_nft.wasm \
+  --source artiva-dev --network testnet \
   -- \
   --admin "$ADMIN" \
   --registry "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABSC4" \
-  --name "Molotov" --symbol "MOLO"
+  --name "Artiva" --symbol "MOLO"
 ```
 
 ### Smoke test en vivo (verificado)
 
 ```bash
 ID=CBS6UQE542PLU54SVUIK76EKWUJ3CNPOQ35IB4WXKF3BU6YDIBEC7XWS
-ADMIN=$(stellar keys address molotov-dev)
+ADMIN=$(stellar keys address artiva-dev)
 
 # mint 10% royalty, 1 recipient (100%)
-stellar contract invoke --id $ID --source molotov-dev --network testnet -- mint \
+stellar contract invoke --id $ID --source artiva-dev --network testnet -- mint \
   --artist "$ADMIN" --recipient "$ADMIN" --token_uri "ipfs://smoke-test-obra" \
   --royalty_bps 1000 --recipients "[{\"address\":\"$ADMIN\",\"share_bps\":10000}]"
 # -> token_id 0, evento MintedEvent emitido
 
-stellar contract invoke --id $ID --source molotov-dev --network testnet -- \
+stellar contract invoke --id $ID --source artiva-dev --network testnet -- \
   get_royalty_info --token_id 0 --sale_price 10000000
 # -> [["G…","1000000"]]  (10% de 10.000.000 stroops)
 ```
@@ -163,7 +163,7 @@ queda obsoleto y reemplazado por este contrato.
 
 ## ArtistRegistry (the minting gate — Phase 1)
 
-Admin-curated allowlist of the artists allowed to mint on `MolotovNft`. The NFT
+Admin-curated allowlist of the artists allowed to mint on `ArtivaNft`. The NFT
 calls `is_registered(artist)` cross-contract before every mint; only the contract
 owner (admin / curator) can `register` or `revoke`. Access mirrors the NFT
 exactly: a single owner set at construction (`stellar-access` Ownable),
@@ -195,20 +195,20 @@ Explorer: <https://stellar.expert/explorer/testnet/contract/CC37LTUPS5WLNBQSVNJJ
 Desde `contracts/`:
 
 ```bash
-cargo test -p molotov-artist-registry   # 10 tests, all green
-stellar contract build                  # -> target/wasm32v1-none/release/molotov_artist_registry.wasm
+cargo test -p artiva-artist-registry   # 10 tests, all green
+stellar contract build                  # -> target/wasm32v1-none/release/artiva_artist_registry.wasm
 
-ADMIN=$(stellar keys address molotov-dev)
+ADMIN=$(stellar keys address artiva-dev)
 stellar contract deploy \
-  --wasm target/wasm32v1-none/release/molotov_artist_registry.wasm \
-  --source molotov-dev --network testnet \
+  --wasm target/wasm32v1-none/release/artiva_artist_registry.wasm \
+  --source artiva-dev --network testnet \
   -- \
   --admin "$ADMIN"
 
 # Wire the NFT gate to the real registry (owner-gated, in place):
 NFT=CBS6UQE542PLU54SVUIK76EKWUJ3CNPOQ35IB4WXKF3BU6YDIBEC7XWS
 REGISTRY=CC37LTUPS5WLNBQSVNJJGBMZK4QCUJ76EFGW4RGY7XNVLKFKXCRGU533
-stellar contract invoke --id $NFT --source molotov-dev --network testnet -- \
+stellar contract invoke --id $NFT --source artiva-dev --network testnet -- \
   set_registry --new_registry $REGISTRY
 ```
 
@@ -230,7 +230,7 @@ End-to-end gate cycle against the live NFT (`CBS6UQE…7XWS`):
 > After the smoke test the dev account was re-registered, so testnet minting works
 > for the next phase (Marketplace).
 
-### Tests (`cargo test -p molotov-artist-registry` — 10/10 verdes)
+### Tests (`cargo test -p artiva-artist-registry` — 10/10 verdes)
 
 | # | Test | Result |
 |---|---|---|
@@ -271,14 +271,14 @@ Access mirrors the NFT/registry: Ownable, owner-gated `set_allowed_currency` /
 | Network | TESTNET (`Test SDF Network ; September 2015`) |
 | Contract ID | `CB6T6DOYV2JCD36ZE43ESXNGCL2GBDARCZNRVYQWOXGTZNJBWB72K7DU` |
 | WASM hash | `7a332aa81eea6bacd15652383df5a2951fb4377a33d263cb037789d44deea6e1` |
-| Admin/Owner | `GANXCETUVUUILGJPVEZWM7EH66IZM5OICUPMNUWNXKIBRK425MUKZERM` (`molotov-dev`) |
+| Admin/Owner | `GANXCETUVUUILGJPVEZWM7EH66IZM5OICUPMNUWNXKIBRK425MUKZERM` (`artiva-dev`) |
 | fee_bps | `250` (2.5%) |
 | Treasury | `GD2N45ROUXL32K3STXUWS4GLBFJXWLONHTQXHSNRAXXAL2KHFRC3KPHV` |
 | Allowed currency | native XLM SAC `CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC` |
 
 Explorer: <https://stellar.expert/explorer/testnet/contract/CB6T6DOYV2JCD36ZE43ESXNGCL2GBDARCZNRVYQWOXGTZNJBWB72K7DU>
 
-Bindings TS: `packages/stellar-client/src/molotov-marketplace/` (sha256 `src/index.ts`:
+Bindings TS: `packages/stellar-client/src/artiva-marketplace/` (sha256 `src/index.ts`:
 `94b549c7394cccf108578c4ab48be22f73b1d967fc70d4912e13976e4c55ddd2`).
 
 ### Reproducir el deploy
@@ -286,18 +286,18 @@ Bindings TS: `packages/stellar-client/src/molotov-marketplace/` (sha256 `src/ind
 Desde `contracts/`:
 
 ```bash
-cargo test -p molotov-marketplace   # 53 tests, todos verdes
-stellar contract build              # -> target/wasm32v1-none/release/molotov_marketplace.wasm
+cargo test -p artiva-marketplace   # 53 tests, todos verdes
+stellar contract build              # -> target/wasm32v1-none/release/artiva_marketplace.wasm
 
-ADMIN=$(stellar keys address molotov-dev)
+ADMIN=$(stellar keys address artiva-dev)
 TREASURY=$(stellar keys address mkt-treasury)
 stellar contract deploy \
-  --wasm target/wasm32v1-none/release/molotov_marketplace.wasm \
-  --source molotov-dev --network testnet \
+  --wasm target/wasm32v1-none/release/artiva_marketplace.wasm \
+  --source artiva-dev --network testnet \
   -- --admin "$ADMIN" --fee_bps 250 --treasury "$TREASURY"
 
 # Allow the native XLM SAC as a payment currency (without this, buy fails).
-stellar contract invoke --id <MARKETPLACE> --source molotov-dev --network testnet --send=yes \
+stellar contract invoke --id <MARKETPLACE> --source artiva-dev --network testnet --send=yes \
   -- set_allowed_currency \
   --currency CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC --allowed true
 ```
@@ -324,7 +324,7 @@ balance deltas across the buy:
 This is the first exercise of the real cross-contract calls into the deployed NFT
 (`get_royalty_info` + `transfer`), which the unit tests' mock NFT does not cover.
 
-### Tests (`cargo test -p molotov-marketplace` — 53/53 verdes)
+### Tests (`cargo test -p artiva-marketplace` — 53/53 verdes)
 
 Property-based money conservation P1–P18 against the pure `distribute` (incl. extreme
 `P`, dust, referral-out-of-fee), concrete stroop cases, the objkt reference example,

@@ -1,5 +1,5 @@
--- SQL test harness — runs directly against molotov_test (plain Postgres).
--- Run with: psql molotov_test -f supabase/tests/run_sql_tests.sql
+-- SQL test harness — runs directly against artiva_test (plain Postgres).
+-- Run with: psql artiva_test -f supabase/tests/run_sql_tests.sql
 --
 -- All test code lives inside DO $$ ... $$ plpgsql blocks; assertion helpers are
 -- inline. Isolation between groups: reset_projection() truncates and resets.

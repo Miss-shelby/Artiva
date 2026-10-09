@@ -4,8 +4,8 @@ import { Footer } from "@/components/footer";
 import { EventContent } from "@/components/event-content";
 
 export const metadata: Metadata = {
-  title: "Molotov en el evento",
-  description: "Escaneá los QR para conseguir una wallet y entrar a Molotov, en tres pasos.",
+  title: "Artiva en el evento",
+  description: "Escaneá los QR para conseguir una wallet y entrar a Artiva, en tres pasos.",
 };
 
 export default function EventPage() {

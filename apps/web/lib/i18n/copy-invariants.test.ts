@@ -39,15 +39,15 @@ describe("create.connectExplain — copy invariants (regression guard)", () => {
     for (const pattern of UNSCOPED_ROYALTY_OVERCLAIMS) {
       expect(es.create.connectExplain).not.toMatch(pattern);
     }
-    // The corrected copy scopes it to Molotov specifically — check the fix
+    // The corrected copy scopes it to Artiva specifically — check the fix
     // is still there, not just that the old wording is gone.
-    expect(es.create.connectExplain).toMatch(/dentro de molotov/i);
+    expect(es.create.connectExplain).toMatch(/dentro de artiva/i);
   });
 
   it("en: does not promise the royalty on every resale without the marketplace scope", () => {
     for (const pattern of UNSCOPED_ROYALTY_OVERCLAIMS) {
       expect(en.create.connectExplain).not.toMatch(pattern);
     }
-    expect(en.create.connectExplain).toMatch(/within molotov/i);
+    expect(en.create.connectExplain).toMatch(/within artiva/i);
   });
 });

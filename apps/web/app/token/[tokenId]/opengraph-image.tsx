@@ -29,7 +29,7 @@ async function loadArtworkDataUri(imageUri: string): Promise<string> {
   }
 }
 
-export const alt = "Obra en Molotov";
+export const alt = "Obra en Artiva";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -123,7 +123,7 @@ export default async function OgImage({ params }: { params: Promise<{ tokenId: s
             color: SMOKE,
           }}
         >
-          MOLOTOV
+          ARTIVA
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
@@ -149,7 +149,7 @@ export default async function OgImage({ params }: { params: Promise<{ tokenId: s
           ) : null}
           {royaltyPct ? (
             <div style={{ display: "flex", fontSize: 22, color: BLUE }}>
-              {`${royaltyPct}% de regalía para quien la creó, en cada venta en Molotov`}
+              {`${royaltyPct}% de regalía para quien la creó, en cada venta en Artiva`}
             </div>
           ) : null}
         </div>

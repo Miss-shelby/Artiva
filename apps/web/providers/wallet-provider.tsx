@@ -19,7 +19,7 @@ import {
 import { WalletSelectModal } from "@/components/wallet-select-modal";
 import { track } from "@/lib/analytics";
 
-const SELECTED_WALLET_KEY = "molotov:selectedWalletId";
+const SELECTED_WALLET_KEY = "artiva:selectedWalletId";
 
 /** Wallets whose getAddress requires user interaction (web-intent wallets):
  *  connecting works, but auto-restoring on page load would fire a redirect.
